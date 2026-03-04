@@ -9,62 +9,37 @@ const DEVICES = [
 ];
 
 export default function FlashPage() {
-  const [selectedDevice, setSelectedDevice] = useState(DEVICES[0]);
   const [version, setVersion] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`/api/manifest/${selectedDevice.id}`)
+    fetch(`/api/manifest/${DEVICES[0].id}`)
       .then((r) => r.json())
       .then((data) => setVersion(data.version ?? null))
       .catch(() => setVersion(null));
-  }, [selectedDevice]);
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
+      <div className="w-full max-w-lg rounded-xl bg-white p-8 shadow-lg">
         <h1 className="mb-2 text-center text-2xl font-bold text-gray-900">
-          Tinyfarms Firmware Flash
+          Tinyfarm Firmware Flash
         </h1>
-        <p className="mb-6 text-center text-sm text-gray-500">
+        <p className="mb-1 text-center text-sm text-gray-500">
           Flash the latest production firmware to your device
         </p>
-
-        {/* Device selector */}
-        <div className="mb-6">
-          <label className="mb-2 block text-sm font-medium text-gray-700">
-            Select your device
-          </label>
-          <div className="flex gap-2">
-            {DEVICES.map((device) => (
-              <button
-                key={device.id}
-                onClick={() => setSelectedDevice(device)}
-                className={`flex-1 cursor-pointer rounded-lg border-2 px-4 py-3 text-sm font-medium transition-colors ${
-                  selectedDevice.id === device.id
-                    ? "border-green-600 bg-green-50 text-green-700"
-                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
-                }`}
-              >
-                {device.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Version info */}
         {version && (
-          <p className="mb-4 text-center text-sm text-gray-500">
+          <p className="mb-6 text-center text-sm text-gray-400">
             Latest version: <span className="font-mono font-semibold">{version}</span>
           </p>
         )}
 
-        {/* Flash button */}
-        <div className="mb-6">
-          <FlashButton
-            key={selectedDevice.id}
-            device={selectedDevice.id}
-            label={selectedDevice.label}
-          />
+        {/* Flash buttons */}
+        <div className="mb-6 flex gap-4">
+          {DEVICES.map((device) => (
+            <div key={device.id} className="flex-1">
+              <FlashButton device={device.id} label={device.label} />
+            </div>
+          ))}
         </div>
 
         {/* Warning */}
