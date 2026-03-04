@@ -3,16 +3,6 @@
 import { useState } from "react";
 import { WIFI_AUTH_MODES, type WifiAuthMode } from "../lib/nvs-generator";
 
-const AUTH_OPTIONS = [
-  { value: WIFI_AUTH_MODES.WIFI_AUTH_WPA2_PSK, label: "WPA2 (most common)" },
-  { value: WIFI_AUTH_MODES.WIFI_AUTH_WPA_WPA2_PSK, label: "WPA/WPA2" },
-  { value: WIFI_AUTH_MODES.WIFI_AUTH_WPA3_PSK, label: "WPA3" },
-  { value: WIFI_AUTH_MODES.WIFI_AUTH_WPA2_WPA3_PSK, label: "WPA2/WPA3" },
-  { value: WIFI_AUTH_MODES.WIFI_AUTH_WPA_PSK, label: "WPA" },
-  { value: WIFI_AUTH_MODES.WIFI_AUTH_WEP, label: "WEP" },
-  { value: WIFI_AUTH_MODES.WIFI_AUTH_OPEN, label: "Open (no password)" },
-];
-
 interface WifiConfigFormProps {
   onFlash: (ssid: string, password: string, authMode: WifiAuthMode) => void;
   isFlashing: boolean;
@@ -24,49 +14,31 @@ export default function WifiConfigForm({
 }: WifiConfigFormProps) {
   const [ssid, setSsid] = useState("");
   const [password, setPassword] = useState("");
-  const [authMode, setAuthMode] = useState<WifiAuthMode>(
-    WIFI_AUTH_MODES.WIFI_AUTH_WPA2_PSK
-  );
+  const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const isOpen = authMode === WIFI_AUTH_MODES.WIFI_AUTH_OPEN;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!ssid.trim()) return;
-    onFlash(ssid.trim(), isOpen ? "" : password, authMode);
+    onFlash(
+      ssid.trim(),
+      isOpen ? "" : password,
+      isOpen ? WIFI_AUTH_MODES.WIFI_AUTH_OPEN : WIFI_AUTH_MODES.WIFI_AUTH_WPA2_PSK
+    );
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="mb-1 block text-sm font-medium text-gray-700">
-          Network Type
-        </label>
-        <select
-          value={authMode}
-          onChange={(e) => setAuthMode(Number(e.target.value) as WifiAuthMode)}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
-          disabled={isFlashing}
-        >
-          {AUTH_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label className="mb-1 block text-sm font-medium text-gray-700">
-          WiFi Network Name (SSID)
+          WiFi Network Name
         </label>
         <input
           type="text"
           value={ssid}
           onChange={(e) => setSsid(e.target.value)}
           maxLength={31}
-          placeholder="Enter your WiFi network name"
+          placeholder="e.g. My Home Network"
           className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
           disabled={isFlashing}
           required
@@ -100,6 +72,19 @@ export default function WifiConfigForm({
           </div>
         </div>
       )}
+
+      <label className="flex cursor-pointer items-center gap-2">
+        <input
+          type="checkbox"
+          checked={isOpen}
+          onChange={(e) => setIsOpen(e.target.checked)}
+          className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+          disabled={isFlashing}
+        />
+        <span className="text-sm text-gray-600">
+          No password (open network)
+        </span>
+      </label>
 
       <button
         type="submit"
