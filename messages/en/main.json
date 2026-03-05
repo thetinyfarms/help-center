@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "backToHome": "Back to Help Center",
+    "backToTinyfarm": "Back to tinyfarm"
+  },
+  "home": {
+    "title": "What do you need help with?",
+    "subtitle": "Choose your product to get started"
+  },
+  "tinyfarm": {
+    "title": "Which tinyfarm do you have?",
+    "subtitle": "Select your device version to get the right support",
+    "card": {
+      "description": "Setup guides, software updates, WiFi configuration, and troubleshooting for your tinyfarm 1.0 & 1.5 devices"
+    }
+  },
+  "tinyverse": {
+    "title": "Tinyverse Help",
+    "subtitle": "Guides for your Tinyverse dashboard — experiments, data, and account management",
+    "card": {
+      "description": "Dashboard navigation, experiment management, data visualization, and account settings"
+    }
+  },
+  "devices": {
+    "v1_0": {
+      "name": "tinyfarm 1.0",
+      "description": "The original tinyfarm with core environmental monitoring — temperature, humidity, and CO\u2082 sensors for automated growing."
+    },
+    "v1_5": {
+      "name": "tinyfarm 1.5",
+      "description": "Updated hardware with new fluid level sensors and an onboard LED status screen for at-a-glance device info."
+    }
+  },
+  "flash": {
+    "title": "Update {device}",
+    "subtitle": "Plug your tinyfarm into your computer with a USB cable, then press the button below.",
+    "flashButton": "Update {label}",
+    "addWifi": "+ Add WiFi details (optional)",
+    "warning": "This will erase the device and install fresh software. Any saved WiFi details will be removed.",
+    "unsupported": "This feature only works in Google Chrome or Microsoft Edge. Please open this page in one of those browsers.",
+    "notAllowed": "Something is blocking the connection. Make sure the page address starts with https://.",
+    "wifi": {
+      "title": "WiFi details (optional)",
+      "ssidLabel": "WiFi network name",
+      "ssidHint": "Must match exactly — including capital letters and spaces.",
+      "ssidPlaceholder": "e.g. My Home Network",
+      "passwordLabel": "WiFi password",
+      "passwordPlaceholder": "Enter your WiFi password",
+      "show": "Show",
+      "hide": "Hide",
+      "openNetwork": "This network has no password"
+    }
+  },
+  "help": {
+    "title": "Help & FAQ",
+    "articles": "Articles",
+    "categories": {
+      "tinyfarm": "tinyfarm",
+      "tinyverse": "tinyverse"
+    },
+    "notFound": "Article not found",
+    "viewAll": "Help & FAQ"
+  },
+  "common": {
+    "original": "Original",
+    "latest": "Latest",
+    "getHelp": "Get help",
+    "flashFirmware": "Update Software",
+    "note": "Note"
+  }
+}

@@ -1,17 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { LanguageSelector } from "@/components/lang/LanguageSelector";
 
 export default function Home() {
+  const t = useTranslations();
+
   return (
     <div className="flex min-h-screen flex-col items-center bg-background px-6 py-16">
       <div className="w-full max-w-2xl space-y-8">
+        {/* Language selector */}
+        <div className="flex justify-end">
+          <LanguageSelector variant="ghost" size="sm" subtle dropdownAlign="end" />
+        </div>
+
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold">What do you need help with?</h1>
+          <h1 className="text-4xl font-bold">{t('home.title')}</h1>
           <p className="mt-2 text-muted-foreground">
-            Choose your product to get started
+            {t('home.subtitle')}
           </p>
         </div>
 
@@ -31,12 +40,12 @@ export default function Home() {
                   Tinyfarm
                 </CardTitle>
                 <CardDescription className="text-green-700/70 dark:text-green-300/70">
-                  Hardware setup, firmware flashing, WiFi configuration, and troubleshooting for your Tinyfarm 1.0 &amp; 1.5 devices
+                  {t('tinyfarm.card.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
                 <span className="inline-flex items-center gap-1 text-sm font-semibold text-green-600 transition-all group-hover:gap-2 dark:text-green-400">
-                  Get help &rarr;
+                  {t('common.getHelp')} &rarr;
                 </span>
               </CardContent>
             </Card>
@@ -56,12 +65,12 @@ export default function Home() {
                   Tinyverse
                 </CardTitle>
                 <CardDescription className="text-purple-700/70 dark:text-purple-300/70">
-                  Dashboard navigation, experiment management, data visualization, and account settings
+                  {t('tinyverse.card.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
                 <span className="inline-flex items-center gap-1 text-sm font-semibold text-purple-600 transition-all group-hover:gap-2 dark:text-purple-400">
-                  Get help &rarr;
+                  {t('common.getHelp')} &rarr;
                 </span>
               </CardContent>
             </Card>

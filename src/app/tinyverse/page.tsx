@@ -6,18 +6,11 @@ import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import { useLanguage } from "@/app/context/LanguageContext";
 import { fetchFaqArticles, type FaqArticle } from "@/lib/faq";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/lang/LanguageSelector";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
-const DEVICES = [
-  { id: "tinyfarm-v1_0", key: "v1_0", badgeKey: "original" },
-  { id: "tinyfarm-v1_5", key: "v1_5", badgeKey: "latest" },
-] as const;
-
-export default function TinyfarmPage() {
+export default function TinyversePage() {
   const t = useTranslations();
   const { locale } = useLanguage();
   const [articles, setArticles] = useState<FaqArticle[]>([]);
@@ -25,7 +18,7 @@ export default function TinyfarmPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    fetchFaqArticles(locale, "tinyfarm").then((data) => {
+    fetchFaqArticles(locale, "tinyverse").then((data) => {
       setArticles(data);
       if (data.length > 0 && !activeSlug) {
         setActiveSlug(data[0].slug);
@@ -55,7 +48,7 @@ export default function TinyfarmPage() {
           </Link>
         </div>
         <div className="flex items-center gap-2">
-          <span className="hidden text-sm font-semibold sm:block">Tinyfarm</span>
+          <span className="hidden text-sm font-semibold sm:block">Tinyverse</span>
           <LanguageSelector variant="ghost" size="sm" subtle dropdownAlign="end" />
         </div>
       </header>
@@ -97,43 +90,10 @@ export default function TinyfarmPage() {
         {/* Content area */}
         <main className="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-12">
           <div className="mx-auto max-w-3xl space-y-10">
-            {/* Device cards */}
+            {/* Header */}
             <section>
-              <h1 className="mb-2 text-2xl font-bold">{t("tinyfarm.title")}</h1>
-              <p className="mb-6 text-muted-foreground">{t("tinyfarm.subtitle")}</p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {DEVICES.map((device) => (
-                  <Link key={device.id} href={`/flash/${device.id}`} className="no-underline">
-                    <Card
-                      size="sm"
-                      className="group cursor-pointer border-green-300 bg-green-50 shadow-green-200 transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md hover:shadow-green-300 dark:border-green-700 dark:bg-green-950 dark:shadow-green-800 dark:hover:shadow-green-700"
-                    >
-                      <CardHeader>
-                        <div className="flex items-center gap-2">
-                          <CardTitle className="text-base text-green-800 dark:text-green-200">
-                            {t(`devices.${device.key}.name`)}
-                          </CardTitle>
-                          <Badge
-                            variant={device.badgeKey === "latest" ? "default" : "secondary"}
-                            className={
-                              device.badgeKey === "latest"
-                                ? "bg-green-600 text-white"
-                                : "bg-green-200 text-green-700 dark:bg-green-800 dark:text-green-200"
-                            }
-                          >
-                            {t(`common.${device.badgeKey}`)}
-                          </Badge>
-                        </div>
-                        <CardDescription className="text-green-700/70 dark:text-green-300/70">
-                          <span className="inline-flex items-center gap-1 text-sm font-semibold text-green-600 transition-all group-hover:gap-2 dark:text-green-400">
-                            {t("common.flashFirmware")} <ChevronRight className="size-4" />
-                          </span>
-                        </CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
+              <h1 className="mb-2 text-2xl font-bold">{t("tinyverse.title")}</h1>
+              <p className="text-muted-foreground">{t("tinyverse.subtitle")}</p>
             </section>
 
             {/* Divider */}
@@ -180,8 +140,8 @@ function SidebarContent({
             onClick={() => onSelect(article.slug)}
             className={`cursor-pointer rounded-sm px-3 py-2 text-left text-sm font-medium transition-colors ${
               isActive
-                ? "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200"
-                : "text-foreground/70 hover:bg-green-50 dark:hover:bg-green-900/30"
+                ? "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200"
+                : "text-foreground/70 hover:bg-purple-50 dark:hover:bg-purple-900/30"
             }`}
           >
             {article.title}

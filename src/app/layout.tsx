@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "./context/LanguageContext";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-heading-family",
@@ -33,7 +34,7 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${schibstedGrotesk.variable} antialiased`}
       >
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

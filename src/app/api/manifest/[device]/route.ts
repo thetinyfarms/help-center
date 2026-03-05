@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const VALID_DEVICES: Record<string, string> = {
-  "tinyfarm-v1_0": "Tinyfarm 1.0",
-  "tinyfarm-v1_5": "Tinyfarm 1.5",
+  "tinyfarm-v1_0": "tinyfarm 1.0",
+  "tinyfarm-v1_5": "tinyfarm 1.5",
 };
 
 interface GitHubRelease {
@@ -70,7 +70,7 @@ export async function GET(
     const origin = request.nextUrl.origin;
 
     const manifest = {
-      name: `${VALID_DEVICES[device]} Production Firmware`,
+      name: `${VALID_DEVICES[device]} Software`,
       version,
       builds: [
         {
@@ -83,7 +83,7 @@ export async function GET(
               offset: 0xe000,
             },
             {
-              path: firmwareAsset.browser_download_url,
+              path: `${origin}/api/firmware/${device}`,
               offset: 0x20000,
             },
           ],

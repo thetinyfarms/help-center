@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "backToHome": "Tilbage til Hjælpecenter",
+    "backToTinyfarm": "Tilbage til Tinyfarm"
+  },
+  "home": {
+    "title": "Hvad har du brug for hjælp til?",
+    "subtitle": "Vælg dit produkt for at komme i gang"
+  },
+  "tinyfarm": {
+    "title": "Hvilken Tinyfarm har du?",
+    "subtitle": "Vælg din enhedsversion for at få den rigtige support",
+    "card": {
+      "description": "Hardware-opsætning, firmware-flash, WiFi-konfiguration og fejlfinding til dine Tinyfarm 1.0 & 1.5 enheder"
+    }
+  },
+  "tinyverse": {
+    "card": {
+      "description": "Dashboard-navigation, eksperimentstyring, datavisualisering og kontoindstillinger"
+    }
+  },
+  "devices": {
+    "v1_0": {
+      "name": "Tinyfarm 1.0",
+      "description": "Den originale Tinyfarm med grundlæggende miljøovervågning — temperatur-, fugtigheds- og CO₂-sensorer til automatiseret dyrkning."
+    },
+    "v1_5": {
+      "name": "Tinyfarm 1.5",
+      "description": "Opdateret hardware med nye væskeniveausensorer og en indbygget LED-statusskærm til hurtig enhedsinformation."
+    }
+  },
+  "flash": {
+    "title": "Opdater {device}",
+    "subtitle": "Tilslut din Tinyfarm til din computer med et USB-kabel, og tryk på knappen nedenfor.",
+    "flashButton": "Opdater {label}",
+    "addWifi": "+ Tilføj WiFi-oplysninger (valgfrit)",
+    "warning": "Enheden slettes og ny software installeres. Gemte WiFi-oplysninger fjernes.",
+    "unsupported": "Denne funktion virker kun i Google Chrome eller Microsoft Edge. Åbn denne side i en af disse browsere.",
+    "notAllowed": "Noget blokerer forbindelsen. Sørg for, at sidens adresse starter med https://.",
+    "wifi": {
+      "title": "WiFi-oplysninger (valgfrit)",
+      "ssidLabel": "WiFi-netværksnavn",
+      "ssidHint": "Skal matche præcist — inklusive store bogstaver og mellemrum.",
+      "ssidPlaceholder": "f.eks. Mit Hjemmenetværk",
+      "passwordLabel": "WiFi-adgangskode",
+      "passwordPlaceholder": "Indtast din WiFi-adgangskode",
+      "show": "Vis",
+      "hide": "Skjul",
+      "openNetwork": "Dette netværk har ingen adgangskode"
+    }
+  },
+  "help": {
+    "title": "Hjælp & FAQ",
+    "articles": "Artikler",
+    "categories": {
+      "tinyfarm": "Tinyfarm",
+      "tinyverse": "Tinyverse"
+    },
+    "notFound": "Artikel ikke fundet",
+    "viewAll": "Hjælp & FAQ"
+  },
+  "common": {
+    "original": "Original",
+    "latest": "Nyeste",
+    "getHelp": "Få hjælp",
+    "flashFirmware": "Flash nyeste firmware",
+    "note": "Bemærk"
+  }
+}

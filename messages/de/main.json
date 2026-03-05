@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "backToHome": "Zurück zum Hilfecenter",
+    "backToTinyfarm": "Zurück zu Tinyfarm"
+  },
+  "home": {
+    "title": "Wobei brauchst du Hilfe?",
+    "subtitle": "Wähle dein Produkt, um loszulegen"
+  },
+  "tinyfarm": {
+    "title": "Welche Tinyfarm hast du?",
+    "subtitle": "Wähle deine Geräteversion für die richtige Unterstützung",
+    "card": {
+      "description": "Hardware-Einrichtung, Firmware-Flashen, WLAN-Konfiguration und Fehlerbehebung für deine Tinyfarm 1.0 & 1.5 Geräte"
+    }
+  },
+  "tinyverse": {
+    "card": {
+      "description": "Dashboard-Navigation, Experimentverwaltung, Datenvisualisierung und Kontoeinstellungen"
+    }
+  },
+  "devices": {
+    "v1_0": {
+      "name": "Tinyfarm 1.0",
+      "description": "Die originale Tinyfarm mit grundlegender Umweltüberwachung — Temperatur-, Feuchtigkeits- und CO₂-Sensoren für automatisiertes Anbauen."
+    },
+    "v1_5": {
+      "name": "Tinyfarm 1.5",
+      "description": "Aktualisierte Hardware mit neuen Füllstandsensoren und einem integrierten LED-Statusbildschirm für schnelle Geräteinformationen."
+    }
+  },
+  "flash": {
+    "title": "{device} aktualisieren",
+    "subtitle": "Verbinde deine Tinyfarm per USB-Kabel mit deinem Computer und drücke dann die Taste unten.",
+    "flashButton": "{label} aktualisieren",
+    "addWifi": "+ WLAN-Daten hinzufügen (optional)",
+    "warning": "Das Gerät wird gelöscht und neue Software installiert. Gespeicherte WLAN-Daten werden entfernt.",
+    "unsupported": "Diese Funktion funktioniert nur in Google Chrome oder Microsoft Edge. Bitte öffne diese Seite in einem dieser Browser.",
+    "notAllowed": "Etwas blockiert die Verbindung. Stelle sicher, dass die Seitenadresse mit https:// beginnt.",
+    "wifi": {
+      "title": "WLAN-Daten (optional)",
+      "ssidLabel": "WLAN-Netzwerkname",
+      "ssidHint": "Muss genau übereinstimmen — einschließlich Groß-/Kleinschreibung und Leerzeichen.",
+      "ssidPlaceholder": "z.B. Mein Heimnetzwerk",
+      "passwordLabel": "WLAN-Passwort",
+      "passwordPlaceholder": "WLAN-Passwort eingeben",
+      "show": "Zeigen",
+      "hide": "Verbergen",
+      "openNetwork": "Dieses Netzwerk hat kein Passwort"
+    }
+  },
+  "help": {
+    "title": "Hilfe & FAQ",
+    "articles": "Artikel",
+    "categories": {
+      "tinyfarm": "Tinyfarm",
+      "tinyverse": "Tinyverse"
+    },
+    "notFound": "Artikel nicht gefunden",
+    "viewAll": "Hilfe & FAQ"
+  },
+  "common": {
+    "original": "Original",
+    "latest": "Neueste",
+    "getHelp": "Hilfe erhalten",
+    "flashFirmware": "Neueste Firmware flashen",
+    "note": "Hinweis"
+  }
+}

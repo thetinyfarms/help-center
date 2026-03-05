@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "backToHome": "Lura lejn iċ-Ċentru tal-Għajnuna",
+    "backToTinyfarm": "Lura lejn Tinyfarm"
+  },
+  "home": {
+    "title": "X'għandek bżonn għajnuna bih?",
+    "subtitle": "Agħżel il-prodott tiegħek biex tibda"
+  },
+  "tinyfarm": {
+    "title": "Liema Tinyfarm għandek?",
+    "subtitle": "Agħżel il-verżjoni tal-apparat tiegħek għall-appoġġ it-tajjeb",
+    "card": {
+      "description": "Installazzjoni tal-hardware, aġġornament tal-firmware, konfigurazzjoni tal-WiFi u soluzzjoni tal-problemi għall-apparati Tinyfarm 1.0 u 1.5 tiegħek"
+    }
+  },
+  "tinyverse": {
+    "card": {
+      "description": "Navigazzjoni tad-dashboard, ġestjoni tal-esperimenti, viżwalizzazzjoni tad-data u settings tal-kont"
+    }
+  },
+  "devices": {
+    "v1_0": {
+      "name": "Tinyfarm 1.0",
+      "description": "It-Tinyfarm oriġinali b'monitoraġġ ambjentali bażiku — sensuri tat-temperatura, tal-umidità u tas-CO₂ għat-tkabbir awtomatizzat."
+    },
+    "v1_5": {
+      "name": "Tinyfarm 1.5",
+      "description": "Hardware aġġornat b'sensuri ġodda tal-livell tal-likwidu u skrin LED tal-istatus integrat għal informazzjoni mgħaġġla tal-apparat."
+    }
+  },
+  "flash": {
+    "title": "Aġġorna {device}",
+    "subtitle": "Qabbad it-Tinyfarm tiegħek mal-kompjuter b'kejbil USB u agħfas il-buttuna t'hawn taħt.",
+    "flashButton": "Aġġorna {label}",
+    "addWifi": "+ Żid dettalji tal-WiFi (mhux obbligatorju)",
+    "warning": "L-apparat se jitħassar u software ġdid jiġi installat. Id-dettalji tal-WiFi salvati se jitneħħew.",
+    "unsupported": "Din il-funzjoni taħdem biss f'Google Chrome jew Microsoft Edge. Iftaħ din il-paġna f'wieħed minn dawn il-browsers.",
+    "notAllowed": "Xi ħaġa qed timblokka l-konnessjoni. Kun żgur li l-indirizz tal-paġna jibda b'https://.",
+    "wifi": {
+      "title": "Dettalji tal-WiFi (mhux obbligatorju)",
+      "ssidLabel": "Isem tan-netwerk WiFi",
+      "ssidHint": "Irid jaqbel eżatt — inklużi l-ittri kbar u l-ispazji.",
+      "ssidPlaceholder": "eż. In-Netwerk tad-Dar Tiegħi",
+      "passwordLabel": "Password tal-WiFi",
+      "passwordPlaceholder": "Daħħal il-password tal-WiFi tiegħek",
+      "show": "Uri",
+      "hide": "Aħbi",
+      "openNetwork": "Dan in-netwerk m'għandux password"
+    }
+  },
+  "help": {
+    "title": "Għajnuna u FAQ",
+    "articles": "Artikli",
+    "categories": {
+      "tinyfarm": "Tinyfarm",
+      "tinyverse": "Tinyverse"
+    },
+    "notFound": "Artiklu mhux misjub",
+    "viewAll": "Għajnuna u FAQ"
+  },
+  "common": {
+    "original": "Oriġinali",
+    "latest": "L-Aħħar",
+    "getHelp": "Ikseb għajnuna",
+    "flashFirmware": "Aġġorna l-aħħar firmware",
+    "note": "Nota"
+  }
+}

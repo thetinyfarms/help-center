@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "backToHome": "Terug naar Helpcentrum",
+    "backToTinyfarm": "Terug naar Tinyfarm"
+  },
+  "home": {
+    "title": "Waar heb je hulp bij nodig?",
+    "subtitle": "Kies je product om te beginnen"
+  },
+  "tinyfarm": {
+    "title": "Welke Tinyfarm heb je?",
+    "subtitle": "Selecteer je apparaatversie voor de juiste ondersteuning",
+    "card": {
+      "description": "Hardware-installatie, firmware flashen, WiFi-configuratie en probleemoplossing voor je Tinyfarm 1.0 & 1.5 apparaten"
+    }
+  },
+  "tinyverse": {
+    "card": {
+      "description": "Dashboardnavigatie, experimentbeheer, datavisualisatie en accountinstellingen"
+    }
+  },
+  "devices": {
+    "v1_0": {
+      "name": "Tinyfarm 1.0",
+      "description": "De originele Tinyfarm met basis omgevingsmonitoring — temperatuur-, vochtigheids- en CO₂-sensoren voor geautomatiseerd kweken."
+    },
+    "v1_5": {
+      "name": "Tinyfarm 1.5",
+      "description": "Bijgewerkte hardware met nieuwe vloeistofniveausensoren en een ingebouwd LED-statusscherm voor snelle apparaatinfo."
+    }
+  },
+  "flash": {
+    "title": "{device} updaten",
+    "subtitle": "Sluit je Tinyfarm met een USB-kabel aan op je computer en druk op de knop hieronder.",
+    "flashButton": "{label} updaten",
+    "addWifi": "+ WiFi-gegevens toevoegen (optioneel)",
+    "warning": "Het apparaat wordt gewist en nieuwe software wordt geïnstalleerd. Opgeslagen WiFi-gegevens worden verwijderd.",
+    "unsupported": "Deze functie werkt alleen in Google Chrome of Microsoft Edge. Open deze pagina in een van die browsers.",
+    "notAllowed": "Er blokkeert iets de verbinding. Zorg dat het paginaadres begint met https://.",
+    "wifi": {
+      "title": "WiFi-gegevens (optioneel)",
+      "ssidLabel": "WiFi-netwerknaam",
+      "ssidHint": "Moet exact overeenkomen — inclusief hoofdletters en spaties.",
+      "ssidPlaceholder": "bijv. Mijn Thuisnetwerk",
+      "passwordLabel": "WiFi-wachtwoord",
+      "passwordPlaceholder": "Voer je WiFi-wachtwoord in",
+      "show": "Tonen",
+      "hide": "Verbergen",
+      "openNetwork": "Dit netwerk heeft geen wachtwoord"
+    }
+  },
+  "help": {
+    "title": "Hulp & FAQ",
+    "articles": "Artikelen",
+    "categories": {
+      "tinyfarm": "Tinyfarm",
+      "tinyverse": "Tinyverse"
+    },
+    "notFound": "Artikel niet gevonden",
+    "viewAll": "Hulp & FAQ"
+  },
+  "common": {
+    "original": "Origineel",
+    "latest": "Nieuwste",
+    "getHelp": "Hulp krijgen",
+    "flashFirmware": "Nieuwste firmware flashen",
+    "note": "Opmerking"
+  }
+}

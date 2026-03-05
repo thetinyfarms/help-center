@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "backToHome": "Grįžti į Pagalbos centrą",
+    "backToTinyfarm": "Grįžti į Tinyfarm"
+  },
+  "home": {
+    "title": "Su kuo jums reikia pagalbos?",
+    "subtitle": "Pasirinkite savo produktą, kad pradėtumėte"
+  },
+  "tinyfarm": {
+    "title": "Kokią Tinyfarm turite?",
+    "subtitle": "Pasirinkite savo įrenginio versiją, kad gautumėte tinkamą pagalbą",
+    "card": {
+      "description": "Aparatūros sąranka, programinės įrangos atnaujinimas, WiFi konfigūracija ir trikčių šalinimas jūsų Tinyfarm 1.0 ir 1.5 įrenginiams"
+    }
+  },
+  "tinyverse": {
+    "card": {
+      "description": "Valdymo skydelio navigacija, eksperimentų valdymas, duomenų vizualizacija ir paskyros nustatymai"
+    }
+  },
+  "devices": {
+    "v1_0": {
+      "name": "Tinyfarm 1.0",
+      "description": "Originali Tinyfarm su pagrindine aplinkos stebėsena — temperatūros, drėgmės ir CO₂ jutikliai automatizuotam auginimui."
+    },
+    "v1_5": {
+      "name": "Tinyfarm 1.5",
+      "description": "Atnaujinta aparatūra su naujais skysčio lygio jutikliais ir integruotu LED būsenos ekranu greitai įrenginio informacijai."
+    }
+  },
+  "flash": {
+    "title": "Atnaujinti {device}",
+    "subtitle": "Prijunkite Tinyfarm prie kompiuterio USB kabeliu ir paspauskite mygtuką žemiau.",
+    "flashButton": "Atnaujinti {label}",
+    "addWifi": "+ Pridėti WiFi duomenis (neprivaloma)",
+    "warning": "Įrenginys bus ištrintas ir įdiegta nauja programinė įranga. Išsaugoti WiFi duomenys bus pašalinti.",
+    "unsupported": "Ši funkcija veikia tik Google Chrome arba Microsoft Edge. Atidarykite šį puslapį viena iš šių naršyklių.",
+    "notAllowed": "Kažkas blokuoja ryšį. Įsitikinkite, kad puslapio adresas prasideda https://.",
+    "wifi": {
+      "title": "WiFi duomenys (neprivaloma)",
+      "ssidLabel": "WiFi tinklo pavadinimas",
+      "ssidHint": "Turi tiksliai sutapti — įskaitant didžiąsias raides ir tarpus.",
+      "ssidPlaceholder": "pvz. Mano Namų Tinklas",
+      "passwordLabel": "WiFi slaptažodis",
+      "passwordPlaceholder": "Įveskite WiFi slaptažodį",
+      "show": "Rodyti",
+      "hide": "Slėpti",
+      "openNetwork": "Šis tinklas neturi slaptažodžio"
+    }
+  },
+  "help": {
+    "title": "Pagalba ir DUK",
+    "articles": "Straipsniai",
+    "categories": {
+      "tinyfarm": "Tinyfarm",
+      "tinyverse": "Tinyverse"
+    },
+    "notFound": "Straipsnis nerastas",
+    "viewAll": "Pagalba ir DUK"
+  },
+  "common": {
+    "original": "Originalus",
+    "latest": "Naujausias",
+    "getHelp": "Gauti pagalbą",
+    "flashFirmware": "Atnaujinti naujausią programinę įrangą",
+    "note": "Pastaba"
+  }
+}

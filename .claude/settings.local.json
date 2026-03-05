@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(vercel:*)",
+      "WebFetch(domain:esphome.github.io)",
+      "WebFetch(domain:unpkg.com)"
     ]
   }
 }

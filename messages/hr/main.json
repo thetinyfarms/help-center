@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "backToHome": "Natrag na Centar za pomoć",
+    "backToTinyfarm": "Natrag na Tinyfarm"
+  },
+  "home": {
+    "title": "S čime vam trebamo pomoći?",
+    "subtitle": "Odaberite svoj proizvod za početak"
+  },
+  "tinyfarm": {
+    "title": "Koju Tinyfarm imate?",
+    "subtitle": "Odaberite verziju uređaja za pravu podršku",
+    "card": {
+      "description": "Postavljanje hardvera, ažuriranje firmvera, WiFi konfiguracija i rješavanje problema za vaše Tinyfarm 1.0 i 1.5 uređaje"
+    }
+  },
+  "tinyverse": {
+    "card": {
+      "description": "Navigacija nadzorne ploče, upravljanje eksperimentima, vizualizacija podataka i postavke računa"
+    }
+  },
+  "devices": {
+    "v1_0": {
+      "name": "Tinyfarm 1.0",
+      "description": "Originalna Tinyfarm s osnovnim praćenjem okoliša — senzori temperature, vlažnosti i CO₂ za automatizirani uzgoj."
+    },
+    "v1_5": {
+      "name": "Tinyfarm 1.5",
+      "description": "Ažurirani hardver s novim senzorima razine tekućine i ugrađenim LED statusnim zaslonom za brze informacije o uređaju."
+    }
+  },
+  "flash": {
+    "title": "Ažuriraj {device}",
+    "subtitle": "Spojite Tinyfarm na računalo USB kabelom i pritisnite gumb ispod.",
+    "flashButton": "Ažuriraj {label}",
+    "addWifi": "+ Dodaj WiFi podatke (neobavezno)",
+    "warning": "Uređaj će biti izbrisan i instaliran će biti novi softver. Spremljeni WiFi podaci bit će uklonjeni.",
+    "unsupported": "Ova značajka radi samo u Google Chromeu ili Microsoft Edgeu. Otvorite ovu stranicu u jednom od tih preglednika.",
+    "notAllowed": "Nešto blokira vezu. Provjerite počinje li adresa stranice s https://.",
+    "wifi": {
+      "title": "WiFi podaci (neobavezno)",
+      "ssidLabel": "Naziv WiFi mreže",
+      "ssidHint": "Mora točno odgovarati — uključujući velika slova i razmake.",
+      "ssidPlaceholder": "npr. Moja Kućna Mreža",
+      "passwordLabel": "WiFi lozinka",
+      "passwordPlaceholder": "Unesite WiFi lozinku",
+      "show": "Prikaži",
+      "hide": "Sakrij",
+      "openNetwork": "Ova mreža nema lozinku"
+    }
+  },
+  "help": {
+    "title": "Pomoć i ČPP",
+    "articles": "Članci",
+    "categories": {
+      "tinyfarm": "Tinyfarm",
+      "tinyverse": "Tinyverse"
+    },
+    "notFound": "Članak nije pronađen",
+    "viewAll": "Pomoć i ČPP"
+  },
+  "common": {
+    "original": "Originalni",
+    "latest": "Najnoviji",
+    "getHelp": "Pomoć",
+    "flashFirmware": "Ažuriraj najnoviji firmver",
+    "note": "Napomena"
+  }
+}
