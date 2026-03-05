@@ -40,13 +40,14 @@
     "wifi": {
       "title": "WLAN-Daten (optional)",
       "ssidLabel": "WLAN-Netzwerkname",
-      "ssidHint": "Muss genau übereinstimmen — einschließlich Groß-/Kleinschreibung und Leerzeichen.",
-      "ssidPlaceholder": "z.B. Mein Heimnetzwerk",
+      "ssidHint": "Muss genau übereinstimmen — einschließlich Groß-/Kleinschreibung und Leerzeichen. Nur 2,4-GHz-Netzwerke werden unterstützt.",
+      "ssidPlaceholder": "z.B. Schul-WLAN",
       "passwordLabel": "WLAN-Passwort",
       "passwordPlaceholder": "WLAN-Passwort eingeben",
       "show": "Zeigen",
       "hide": "Verbergen",
-      "openNetwork": "Dieses Netzwerk hat kein Passwort"
+      "openNetwork": "Dieses Netzwerk hat kein Passwort",
+      "tip": "Tipp: Es ist einfacher, WLAN direkt über die tinyfarm zu verbinden — sie kann verfügbare Netzwerke anzeigen."
     }
   },
   "help": {

@@ -40,13 +40,14 @@
     "wifi": {
       "title": "WiFi podaci (neobavezno)",
       "ssidLabel": "Naziv WiFi mreže",
-      "ssidHint": "Mora točno odgovarati — uključujući velika slova i razmake.",
-      "ssidPlaceholder": "npr. Moja Kućna Mreža",
+      "ssidHint": "Mora točno odgovarati — uključujući velika slova i razmake. Podržane su samo 2,4 GHz mreže.",
+      "ssidPlaceholder": "npr. Školski WiFi",
       "passwordLabel": "WiFi lozinka",
       "passwordPlaceholder": "Unesite WiFi lozinku",
       "show": "Prikaži",
       "hide": "Sakrij",
-      "openNetwork": "Ova mreža nema lozinku"
+      "openNetwork": "Ova mreža nema lozinku",
+      "tip": "Savjet: lakše je spojiti WiFi izravno s tinyfarm uređaja — može skenirati i prikazati dostupne mreže."
     }
   },
   "help": {
