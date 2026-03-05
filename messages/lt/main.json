@@ -40,13 +40,14 @@
     "wifi": {
       "title": "WiFi duomenys (neprivaloma)",
       "ssidLabel": "WiFi tinklo pavadinimas",
-      "ssidHint": "Turi tiksliai sutapti — įskaitant didžiąsias raides ir tarpus.",
-      "ssidPlaceholder": "pvz. Mano Namų Tinklas",
+      "ssidHint": "Turi tiksliai sutapti — įskaitant didžiąsias raides ir tarpus. Palaikomi tik 2,4 GHz tinklai.",
+      "ssidPlaceholder": "pvz. Mokyklos WiFi",
       "passwordLabel": "WiFi slaptažodis",
       "passwordPlaceholder": "Įveskite WiFi slaptažodį",
       "show": "Rodyti",
       "hide": "Slėpti",
-      "openNetwork": "Šis tinklas neturi slaptažodžio"
+      "openNetwork": "Šis tinklas neturi slaptažodžio",
+      "tip": "Patarimas: paprasčiau prisijungti prie WiFi tiesiai iš tinyfarm — ji gali nuskaityti ir parodyti galimus tinklus."
     }
   },
   "help": {

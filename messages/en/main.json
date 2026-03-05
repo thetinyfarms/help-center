@@ -42,13 +42,14 @@
     "wifi": {
       "title": "WiFi details (optional)",
       "ssidLabel": "WiFi network name",
-      "ssidHint": "Must match exactly — including capital letters and spaces.",
-      "ssidPlaceholder": "e.g. My Home Network",
+      "ssidHint": "Must match exactly — including capital letters and spaces. Only 2.4 GHz networks are supported.",
+      "ssidPlaceholder": "e.g. My School WiFi",
       "passwordLabel": "WiFi password",
       "passwordPlaceholder": "Enter your WiFi password",
       "show": "Show",
       "hide": "Hide",
-      "openNetwork": "This network has no password"
+      "openNetwork": "This network has no password",
+      "tip": "Tip: it's easier to connect WiFi directly from the tinyfarm — it can scan and show available networks."
     }
   },
   "help": {

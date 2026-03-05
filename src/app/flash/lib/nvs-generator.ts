@@ -2,6 +2,9 @@
  * Generates a valid ESP-IDF NVS partition binary containing WiFi credentials
  * matching the ESP_WM_LITE_Configuration struct format used by the firmware.
  *
+ * Uses the old/simple blob format (NVS_TYPE_BLOB = 0x41) which is what
+ * Arduino's Preferences.putBytes() produces for blobs under 1984 bytes.
+ *
  * NVS format: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/storage/nvs_flash.html
  */
 
@@ -20,11 +23,14 @@ const crc32Table = (() => {
 })();
 
 function crc32(data: Uint8Array): number {
-  let crc = 0xffffffff;
+  // ESP-IDF NVS calls esp_rom_crc32_le(0xFFFFFFFF, data, len).
+  // That ROM function internally does: crc = ~init (=0), loop, return ~crc.
+  // So the effective algorithm is: init=0, standard loop, invert output.
+  let crc = 0;
   for (let i = 0; i < data.length; i++) {
     crc = crc32Table[(crc ^ data[i]) & 0xff] ^ (crc >>> 8);
   }
-  return (crc ^ 0xffffffff) >>> 0;
+  return (~crc) >>> 0;
 }
 
 // --- WiFi auth modes (matches wifi_auth_mode_t enum) ---
@@ -91,7 +97,7 @@ function buildConfigStruct(
   writeString(buf, offset, "ESP32_Async-Control", BOARD_NAME_MAX_LEN);
   offset += BOARD_NAME_MAX_LEN;
 
-  // checkSum - sum of all preceding bytes
+  // checkSum - sum of all preceding bytes (matches firmware's calcChecksum())
   let checkSum = 0;
   for (let i = 0; i < offset; i++) {
     checkSum += buf[i];
@@ -107,17 +113,27 @@ const PAGE_SIZE = 4096;
 const ENTRY_SIZE = 32;
 const PAGE_HEADER_SIZE = 32;
 const BITMAP_SIZE = 32;
-const ENTRIES_PER_PAGE = 126;
 
 // NVS types
 const NS_TYPE = 0x01;
-const BLOB_DATA_TYPE = 0x42;
-const BLOB_IDX_TYPE = 0x48;
+const BLOB_TYPE = 0x41; // Old/simple blob format (used by Preferences.putBytes for small blobs)
 
 // Page states
 const PAGE_ACTIVE = 0xfffffffe;
 
-function writeEntry(
+function markEntryBitmap(page: Uint8Array, entryIndex: number) {
+  // Each entry uses 2 bits in bitmap. Written = 0b10, Empty = 0b11
+  // Bitmap starts at offset 32 (after page header)
+  const byteIndex = PAGE_HEADER_SIZE + Math.floor((entryIndex * 2) / 8);
+  const bitOffset = (entryIndex * 2) % 8;
+  // Clear the lower bit of the 2-bit pair to mark as "Written" (0b10)
+  page[byteIndex] &= ~(1 << bitOffset);
+}
+
+/**
+ * Write a single NVS entry header (32 bytes) to the page at the given entry index.
+ */
+function writeEntryHeader(
   page: Uint8Array,
   entryIndex: number,
   nsIndex: number,
@@ -134,42 +150,27 @@ function writeEntry(
   entry[1] = type;
   entry[2] = span;
   entry[3] = chunkIndex;
-  // bytes 4-7: CRC32 (computed over bytes 8-31)
+  // bytes 4-7: CRC32 (computed below)
 
-  // key (bytes 8-23)
+  // key (bytes 8-23, 16 bytes, null-padded)
   const encoder = new TextEncoder();
   const keyBytes = encoder.encode(key);
   entry.set(keyBytes.subarray(0, Math.min(keyBytes.length, 15)), 8);
 
-  // data (bytes 24-31)
+  // data (bytes 24-31, 8 bytes)
   const dataLen = Math.min(data.length, 8);
   entry.set(data.subarray(0, dataLen), 24);
 
-  // CRC32 over bytes 8-31
-  const entryCrc = crc32(entry.subarray(8, 32));
+  // CRC32 over bytes 0-3 and 8-31, skipping bytes 4-7 (the CRC field itself).
+  // ESP-IDF computes this as: crc32_le(crc32_le(0, &entry[0], 4), &entry[8], 24)
+  // which is equivalent to CRC32 over the 28-byte concatenation [0..3] ++ [8..31].
+  const crcInput = new Uint8Array(28);
+  crcInput.set(entry.subarray(0, 4), 0);   // nsIndex, type, span, chunkIndex
+  crcInput.set(entry.subarray(8, 32), 4);  // key + data
+  const entryCrc = crc32(crcInput);
   new DataView(entry.buffer).setUint32(4, entryCrc, true);
 
   page.set(entry, offset);
-}
-
-function markEntryBitmap(page: Uint8Array, entryIndex: number) {
-  // Each entry uses 2 bits in bitmap. Written = 0b10, Empty = 0b11
-  // Bitmap starts at offset 32 (after page header)
-  const byteIndex = PAGE_HEADER_SIZE + Math.floor((entryIndex * 2) / 8);
-  const bitOffset = (entryIndex * 2) % 8;
-  // Clear the lower bit of the 2-bit pair to mark as "Written" (0b10)
-  page[byteIndex] &= ~(1 << bitOffset);
-}
-
-function writeBlobDataEntries(
-  page: Uint8Array,
-  startEntry: number,
-  blobData: Uint8Array
-) {
-  // Write the actual blob data in subsequent entry slots (32 bytes each)
-  const dataOffset =
-    PAGE_HEADER_SIZE + BITMAP_SIZE + (startEntry + 1) * ENTRY_SIZE;
-  page.set(blobData.subarray(0, Math.min(blobData.length, 8 * ENTRY_SIZE)), dataOffset);
 }
 
 function writePageHeader(page: Uint8Array, seqNo: number) {
@@ -188,6 +189,16 @@ function writePageHeader(page: Uint8Array, seqNo: number) {
   view.setUint32(28, headerCrc, true);
 }
 
+/**
+ * Add a blob to the NVS page using the old/simple blob format (type 0x41).
+ * This is the format that Arduino Preferences.putBytes() uses for blobs <= 1984 bytes.
+ *
+ * Layout:
+ *   Entry N (header): [nsIndex, type=0x41, span, 0xFF, CRC, key, size(u16), rsv(u16), dataCRC(u32)]
+ *   Entries N+1..N+span-1: raw blob data (32 bytes per slot, last slot zero-padded)
+ *
+ * Returns the next free entry index.
+ */
 function addBlobToPage(
   page: Uint8Array,
   entryStart: number,
@@ -198,41 +209,28 @@ function addBlobToPage(
   const dataSpan = Math.ceil(blobData.length / ENTRY_SIZE);
   const totalSpan = 1 + dataSpan; // header entry + data entries
 
-  // BLOB_IDX entry
-  const idxData = new Uint8Array(8);
-  const idxView = new DataView(idxData.buffer);
-  idxView.setUint32(0, blobData.length, true); // total size
-  idxData[4] = 1; // chunkCount
-  idxData[5] = 0; // chunkStart
-  writeEntry(page, entryStart, nsIndex, BLOB_IDX_TYPE, 1, 0xff, key, idxData);
+  // Build the 8-byte data portion of the header entry
+  const headerData = new Uint8Array(8);
+  const headerView = new DataView(headerData.buffer);
+  headerView.setUint16(0, blobData.length, true); // blob size
+  // bytes 2-3: reserved (0x0000)
+  const dataCrc = crc32(blobData);
+  headerView.setUint32(4, dataCrc, true); // CRC32 of blob data
+
+  // Write the entry header
+  writeEntryHeader(page, entryStart, nsIndex, BLOB_TYPE, totalSpan, 0xff, key, headerData);
   markEntryBitmap(page, entryStart);
 
-  // BLOB_DATA entry (header)
-  const blobHeaderData = new Uint8Array(8);
-  const blobView = new DataView(blobHeaderData.buffer);
-  blobView.setUint16(0, blobData.length, true); // chunk data size
-  // bytes 2-3: reserved
-  const dataCrc = crc32(blobData);
-  blobView.setUint32(4, dataCrc, true); // data CRC32
-  writeEntry(
-    page,
-    entryStart + 1,
-    nsIndex,
-    BLOB_DATA_TYPE,
-    totalSpan,
-    0,
-    key,
-    blobHeaderData
-  );
-  markEntryBitmap(page, entryStart + 1);
+  // Write raw blob data into subsequent entry slots
+  const dataOffset = PAGE_HEADER_SIZE + BITMAP_SIZE + (entryStart + 1) * ENTRY_SIZE;
+  page.set(blobData.subarray(0, Math.min(blobData.length, dataSpan * ENTRY_SIZE)), dataOffset);
 
-  // Write actual blob data in subsequent entries
-  writeBlobDataEntries(page, entryStart + 1, blobData);
+  // Mark all data entry slots in bitmap
   for (let i = 0; i < dataSpan; i++) {
-    markEntryBitmap(page, entryStart + 2 + i);
+    markEntryBitmap(page, entryStart + 1 + i);
   }
 
-  return entryStart + 2 + dataSpan;
+  return entryStart + totalSpan;
 }
 
 /**
@@ -262,14 +260,14 @@ export function generateNvsPartition(
   // Entry 0: Namespace "wifiman"
   const nsData = new Uint8Array(8);
   nsData[0] = 1; // assigned namespace index
-  writeEntry(page, entryIdx, 0, NS_TYPE, 1, 0xff, "wifiman", nsData);
+  writeEntryHeader(page, entryIdx, 0, NS_TYPE, 1, 0xff, "wifiman", nsData);
   markEntryBitmap(page, entryIdx);
   entryIdx++;
 
-  // Entries 1+: wm_config blob
+  // Entries 1+: wm_config blob (old format, type 0x41)
   entryIdx = addBlobToPage(page, entryIdx, 1, "wm_config", configBlob);
 
-  // Entries N+: wm_config_bp blob (backup)
+  // Entries N+: wm_config_bp blob (backup, same format)
   entryIdx = addBlobToPage(page, entryIdx, 1, "wm_config_bp", configBlob);
 
   // Write page header (must be last since CRC covers header bytes)
