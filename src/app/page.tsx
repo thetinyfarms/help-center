@@ -9,7 +9,7 @@ export default function Home() {
   const t = useTranslations();
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-background px-6 py-16">
+    <div className="flex min-h-screen flex-col items-center bg-background bg-dotted px-6 py-16">
       <div className="w-full max-w-2xl space-y-8">
         {/* Language selector */}
         <div className="flex justify-end">

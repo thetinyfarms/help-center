@@ -120,6 +120,10 @@
   --border-width-sm: 1.5px;
   --border-width-xs: 1px;
 
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Schibsted Grotesk', sans-serif;
+  --font-mono: 'Space Grotesk', sans-serif;
+
   --tracking-tightest: -0.06em;
   --tracking-tighter: -0.04em;
   --tracking-tight: -0.03em;
@@ -166,6 +170,9 @@
   --card-foreground: var(--base-black);
 
   --blanket: var(--purple-950);
+  --dotted-background: url('/assets/backgrounds/background-dotted-light.png');
+  --blobs-background: url('/assets/backgrounds/background-blobs-light.svg');
+  --stars-background: url('/assets/backgrounds/background-stars.svg');
 }
 
 /* ---- Dark theme ---- */
@@ -207,6 +214,10 @@
   --card-foreground: var(--base-white);
 
   --blanket: var(--purple-950);
+
+  --dotted-background: url('/assets/backgrounds/background-dotted-dark.png');
+  --blobs-background: url('/assets/backgrounds/background-blobs-dark.svg');
+  --stars-background: url('/assets/backgrounds/background-stars.svg');
 }
 
 /* ============================================================
@@ -440,6 +451,51 @@
 
 @utility shadow-default {
   --tw-shadow-color: hsl(var(--border));
+}
+
+@utility shadow-md {
+  box-shadow: 0.125rem 0.125rem 0 0 var(--tw-shadow-color, hsl(var(--border)));
+}
+
+@utility shadow-xl {
+  box-shadow: 0.5rem 0.5rem 0 0 var(--tw-shadow-color, hsl(var(--border)));
+}
+
+@utility shadow-lg {
+  box-shadow: 0.25rem 0.25rem 0 0 var(--tw-shadow-color, hsl(var(--border)));
+}
+
+@utility shadow-sm {
+  box-shadow: 1px 1px 0 0 var(--tw-shadow-color, hsl(var(--border)));
+}
+
+@utility bg-dotted {
+  background-image: var(--dotted-background);
+  background-size: 1rem;
+  background-position: 0 0;
+  background-repeat: repeat;
+  transition: all;
+}
+
+@utility bg-blobs {
+  background-image: var(--blobs-background);
+  background-size: 220rem;
+  background-position: center 298rem;
+  background-repeat: repeat;
+}
+
+@utility bg-ai {
+  background: transparent;
+  background-image: var(--blobs-background);
+  background-size: 300%;
+  background-position: -8% 84%;
+}
+
+@utility bg-img-placeholder {
+  background-image: var(--dotted-background), var(--dotted-background), var(--dotted-background), var(--dotted-background), var(--dotted-background), var(--dotted-background);
+  background-size: 0.5rem;
+  background-position: 0 0;
+  background-repeat: repeat;
 }
 
 /* ============================================================
