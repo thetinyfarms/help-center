@@ -29,9 +29,9 @@ export default function TinyversePage() {
   const activeArticle = articles.find((a) => a.slug === activeSlug) || null;
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background bg-dotted">
       {/* Top bar */}
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-md bg-background/95 px-4 py-3 backdrop-blur sm:px-6">
+      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-md bg-background/95 backdrop-blur px-4 py-3 sm:px-6">
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
@@ -55,7 +55,7 @@ export default function TinyversePage() {
 
       <div className="flex flex-1">
         {/* Sidebar — desktop */}
-        <aside className="hidden w-72 shrink-0 overflow-y-auto border-r border-md lg:block">
+        <aside className="hidden w-72 shrink-0 overflow-y-auto border-r border-md bg-card/50 backdrop-blur lg:block">
           <SidebarContent
             articles={articles}
             activeSlug={activeSlug}
@@ -71,7 +71,7 @@ export default function TinyversePage() {
               className="fixed inset-0 z-40 bg-black/30 lg:hidden"
               onClick={() => setSidebarOpen(false)}
             />
-            <aside className="fixed inset-y-0 left-0 z-50 w-72 overflow-y-auto bg-background shadow-lg lg:hidden">
+            <aside className="fixed inset-y-0 left-0 z-50 w-72 overflow-y-auto bg-card backdrop-blur shadow-xl lg:hidden">
               <div className="pt-16">
                 <SidebarContent
                   articles={articles}
@@ -140,8 +140,8 @@ function SidebarContent({
             onClick={() => onSelect(article.slug)}
             className={`cursor-pointer rounded-sm px-3 py-2 text-left text-sm font-medium transition-colors ${
               isActive
-                ? "bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200"
-                : "text-foreground/70 hover:bg-purple-50 dark:hover:bg-purple-900/30"
+                ? "bg-secondary text-secondary-foreground"
+                : "text-foreground/70 hover:bg-secondary/60"
             }`}
           >
             {article.title}

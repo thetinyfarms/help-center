@@ -133,7 +133,7 @@
   --opacity-disabled: 0.4;
 
   /* ---- Light theme (default) ---- */
-  --background: var(--purple-50);
+  --background: var(--base-white);
   --foreground: var(--base-black);
   --heading: var(--purple-600);
 
@@ -383,6 +383,15 @@
   --tracking-tighter: -0.04em;
   --tracking-tight: -0.03em;
   --tracking-normal: -0.01em;
+
+  /* Border width */
+  --border-width-md: var(--border-width-md);
+  --border-width-sm: var(--border-width-sm);
+  --border-width-xs: var(--border-width-xs);
+
+  /* Opacity */
+  --opacity-secondary: var(--opacity-secondary);
+  --opacity-disabled: var(--opacity-disabled);
 }
 
 /* ============================================================

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { LanguageSelector } from "@/components/lang/LanguageSelector";
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 export default function Home() {
   const t = useTranslations();
@@ -30,7 +32,8 @@ export default function Home() {
           <Link href="/tinyfarm" className="no-underline">
             <Card
               size="lg"
-              className="group cursor-pointer border-green-300 bg-green-50 shadow-green-200 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-300 dark:border-green-700 dark:bg-green-950 dark:shadow-green-800 dark:hover:shadow-green-700"
+              variant="muted"
+              className="group cursor-pointer border-green-200 !shadow-green-200 shadow-none transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-300 dark:border-green-700 dark:bg-green-950 dark:shadow-green-800 dark:hover:shadow-green-700"
             >
               <CardHeader>
                 <div className="mb-2 flex size-12 items-center justify-center rounded-sm bg-green-500 text-2xl text-white">
@@ -44,37 +47,40 @@ export default function Home() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-green-600 transition-all group-hover:gap-2 dark:text-green-400">
-                  {t('common.getHelp')} &rarr;
-                </span>
+                <Button variant="secondary" size="sm" className="self-start">
+                  {t('common.getHelp')}
+                  <ChevronRight className="opacity-secondary"/>
+                </Button>
               </CardContent>
             </Card>
           </Link>
 
           {/* Tinyverse card */}
-          <Link href="/tinyverse" className="no-underline">
             <Card
               size="lg"
-              className="group cursor-pointer border-purple-300 bg-purple-50 shadow-purple-200 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-300 dark:border-purple-700 dark:bg-purple-950 dark:shadow-purple-800 dark:hover:shadow-purple-700"
+              variant="fill"
+              className="group shadow-none transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg hover:bg-card hover:border-border"
             >
               <CardHeader>
-                <div className="mb-2 flex size-12 items-center justify-center rounded-sm bg-purple-500 text-2xl text-white">
+                <div className="mb-2 flex size-12 items-center justify-center rounded-sm bg-primary text-2xl text-white">
                   🪐
                 </div>
-                <CardTitle className="text-xl text-purple-800 dark:text-purple-200">
+                <CardTitle className="text-xl">
                   tinyverse
                 </CardTitle>
-                <CardDescription className="text-purple-700/70 dark:text-purple-300/70">
+                <CardDescription>
                   {t('tinyverse.card.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <span className="inline-flex items-center gap-1 text-sm font-semibold text-purple-600 transition-all group-hover:gap-2 dark:text-purple-400">
-                  {t('common.getHelp')} &rarr;
-                </span>
+                <Link href="/tinyverse" className="no-underline self-start">
+                  <Button variant="secondary" size="sm">
+                    {t('common.getHelp')}
+                    <ChevronRight className="opacity-secondary"/>
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
-          </Link>
         </div>
       </div>
     </div>

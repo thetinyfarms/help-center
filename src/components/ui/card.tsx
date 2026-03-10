@@ -6,20 +6,20 @@ import { cva, VariantProps } from "class-variance-authority"
 const CardContext = React.createContext<{ variant?: CardProps['variant'] }>({})
 
 const cardVariants = cva(
-  "card relative flex flex-col bg-card dark:bg-card/70 border border-md shadow-lg text-card-foreground overflow-hidden backdrop-blur-md outline-none origin-bottom-right transition-all duration-150 [transition-property:width_0s,height_0s,transform_0s]",
+  "card relative flex flex-col bg-card dark:bg-card/70 border !border-md shadow-lg text-card-foreground overflow-hidden backdrop-blur-md outline-none origin-bottom-right transition-all duration-150 [transition-property:width_0s,height_0s,transform_0s]",
   {
     variants: {
       variant: {
         default:
           "shadow-border",
         muted:
-          "!border-muted shadow-muted",
+          "border-muted shadow-muted",
         accent:
-          "!border-ring shadow-ring",
+          "border-ring shadow-ring",
         fill:
-          "!bg-muted/70 !border-muted/40 !shadow-none",
+          "bg-muted/70 border-muted/40",
         ghost:
-          "!border-transparent !bg-transparent shadow-none backdrop-blur-none ![--card-padding:0.25rem]"
+          "border-transparent bg-transparent shadow-none backdrop-blur-none ![--card-padding:0.25rem]"
       },
       size: {
         default: "rounded-md [--card-padding:1rem]",
