@@ -40,13 +40,14 @@
     "wifi": {
       "title": "Dettalji tal-WiFi (mhux obbligatorju)",
       "ssidLabel": "Isem tan-netwerk WiFi",
-      "ssidHint": "Irid jaqbel eżatt — inklużi l-ittri kbar u l-ispazji.",
-      "ssidPlaceholder": "eż. In-Netwerk tad-Dar Tiegħi",
+      "ssidHint": "Irid jaqbel eżatt — inklużi l-ittri kbar u l-ispazji. Biss netwerks ta' 2.4 GHz huma appoġġjati.",
+      "ssidPlaceholder": "eż. WiFi tal-Iskola",
       "passwordLabel": "Password tal-WiFi",
       "passwordPlaceholder": "Daħħal il-password tal-WiFi tiegħek",
       "show": "Uri",
       "hide": "Aħbi",
-      "openNetwork": "Dan in-netwerk m'għandux password"
+      "openNetwork": "Dan in-netwerk m'għandux password",
+      "tip": "Suġġeriment: huwa aktar faċli tikkonnettja l-WiFi direttament mit-tinyfarm — tista' tiskenja u turi n-netwerks disponibbli."
     }
   },
   "help": {

@@ -37,7 +37,7 @@ export default function Home() {
                   🌱
                 </div>
                 <CardTitle className="text-xl text-green-800 dark:text-green-200">
-                  Tinyfarm
+                  tinyfarm
                 </CardTitle>
                 <CardDescription className="text-green-700/70 dark:text-green-300/70">
                   {t('tinyfarm.card.description')}
@@ -62,7 +62,7 @@ export default function Home() {
                   🪐
                 </div>
                 <CardTitle className="text-xl text-purple-800 dark:text-purple-200">
-                  Tinyverse
+                  tinyverse
                 </CardTitle>
                 <CardDescription className="text-purple-700/70 dark:text-purple-300/70">
                   {t('tinyverse.card.description')}

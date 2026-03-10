@@ -180,6 +180,10 @@ export default function DeviceFlashPage() {
                     {t("flash.wifi.openNetwork")}
                   </span>
                 </label>
+
+                <p className="text-xs text-muted-foreground">
+                  {t("flash.wifi.tip")}
+                </p>
               </div>
             )}
 

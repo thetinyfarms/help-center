@@ -40,13 +40,14 @@
     "wifi": {
       "title": "WiFi-gegevens (optioneel)",
       "ssidLabel": "WiFi-netwerknaam",
-      "ssidHint": "Moet exact overeenkomen — inclusief hoofdletters en spaties.",
-      "ssidPlaceholder": "bijv. Mijn Thuisnetwerk",
+      "ssidHint": "Moet exact overeenkomen — inclusief hoofdletters en spaties. Alleen 2,4 GHz-netwerken worden ondersteund.",
+      "ssidPlaceholder": "bijv. School WiFi",
       "passwordLabel": "WiFi-wachtwoord",
       "passwordPlaceholder": "Voer je WiFi-wachtwoord in",
       "show": "Tonen",
       "hide": "Verbergen",
-      "openNetwork": "Dit netwerk heeft geen wachtwoord"
+      "openNetwork": "Dit netwerk heeft geen wachtwoord",
+      "tip": "Tip: het is makkelijker om WiFi rechtstreeks via de tinyfarm te verbinden — die kan beschikbare netwerken tonen."
     }
   },
   "help": {

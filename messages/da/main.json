@@ -40,13 +40,14 @@
     "wifi": {
       "title": "WiFi-oplysninger (valgfrit)",
       "ssidLabel": "WiFi-netværksnavn",
-      "ssidHint": "Skal matche præcist — inklusive store bogstaver og mellemrum.",
-      "ssidPlaceholder": "f.eks. Mit Hjemmenetværk",
+      "ssidHint": "Skal matche præcist — inklusive store bogstaver og mellemrum. Kun 2,4 GHz-netværk understøttes.",
+      "ssidPlaceholder": "f.eks. Skolens WiFi",
       "passwordLabel": "WiFi-adgangskode",
       "passwordPlaceholder": "Indtast din WiFi-adgangskode",
       "show": "Vis",
       "hide": "Skjul",
-      "openNetwork": "Dette netværk har ingen adgangskode"
+      "openNetwork": "Dette netværk har ingen adgangskode",
+      "tip": "Tip: det er nemmere at forbinde WiFi direkte fra din tinyfarm — den kan scanne og vise tilgængelige netværk."
     }
   },
   "help": {
