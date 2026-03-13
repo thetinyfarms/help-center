@@ -108,9 +108,15 @@ export default function TinyversePage() {
     const extractedHeadings: Heading[] = [];
     const lines = activeArticle.content.split('\n');
     console.log('[TOC] Total lines:', lines.length);
+    console.log('[TOC] First 10 lines:', lines.slice(0, 10));
 
     lines.forEach((line, index) => {
-      const match = line.match(/^(#{2,6})\s+(.+)$/);
+      // Log lines that start with # to see the format
+      if (line.trim().startsWith('#')) {
+        console.log(`[TOC] Line ${index} starts with #:`, JSON.stringify(line));
+      }
+
+      const match = line.match(/^(#{2,3})\s+(.+)$/);
       if (match) {
         const level = match[1].length;
         const text = match[2].trim();
