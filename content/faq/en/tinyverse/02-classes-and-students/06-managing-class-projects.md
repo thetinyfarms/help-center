@@ -1,3 +1,10 @@
+---
+title: "Managing Class Projects"
+category: "tinyverse"
+section: "Classes and Students"
+order: 6
+---
+
 # Managing Class Projects
 
 Turn any of your experiments into a project that your students can access and use as a template. Students can create their own experiments based on your project.

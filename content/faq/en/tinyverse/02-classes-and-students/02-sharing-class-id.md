@@ -1,3 +1,10 @@
+---
+title: "Sharing the Class ID with Students"
+category: "tinyverse"
+section: "Classes and Students"
+order: 2
+---
+
 # Sharing the Class ID with Students
 
 After creating a class, you'll need to share the Class ID with your students so they can join. The Class ID is a unique 6-character code displayed at the top of your class page.

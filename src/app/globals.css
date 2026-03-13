@@ -37,10 +37,10 @@
   --blue-950: 220 79% 21%;
 
   /* Green */
-  --green-50: 141 100% 96%;
-  --green-100: 132 100% 93%;
-  --green-200: 132 87% 80%;
-  --green-300: 133 73% 74%;
+  --green-50: 141 100% 94%;
+  --green-100: 132 95% 91%;
+  --green-200: 132 87% 81%;
+  --green-300: 133 70% 76%;
   --green-400: 132 68% 50%;
   --green-500: 144 100% 34%;
   --green-600: 144 100% 30%;
@@ -133,7 +133,7 @@
   --opacity-disabled: 0.4;
 
   /* ---- Light theme (default) ---- */
-  --background: var(--base-white);
+  --background: var(--white);
   --foreground: var(--base-black);
   --heading: var(--purple-600);
 
@@ -517,33 +517,15 @@
 }
 
 .article-content h1 {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: var(--tracking-tightest);
-  color: hsl(var(--heading));
-  margin-bottom: 1rem;
-  margin-top: 0;
+  @apply text-4xl font-heading text-heading tracking-tightest mb-4 mt-0;
 }
 
 .article-content h2 {
-  font-family: var(--font-heading);
-  font-size: 1.375rem;
-  font-weight: 600;
-  letter-spacing: var(--tracking-tighter);
-  color: hsl(var(--heading));
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  @apply text-2xl font-heading font-medium text-heading tracking-tighter mb-3 mt-6;
 }
 
 .article-content h3 {
-  font-family: var(--font-heading);
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: var(--tracking-tight);
-  color: hsl(var(--heading));
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  @apply text-lg font-heading font-semibold text-heading tracking-tight mb-2 mt-6;
 }
 
 .article-content p {
@@ -631,4 +613,34 @@
   border: none;
   border-top: 1px solid hsl(var(--border));
   margin: 2rem 0;
+}
+
+.article-content blockquote {
+  border-left: 0.25rem solid hsl(var(--border));
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-bottom: 1rem;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+}
+
+.article-content blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.article-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.article-content del {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.article-content input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.article-content .task-list-item {
+  list-style-type: none;
 }

@@ -1,3 +1,10 @@
+---
+title: "Language & Theme Settings"
+category: "tinyverse"
+section: "Getting Started"
+order: 6
+---
+
 # Language & Theme Settings
 
 The tinyverse supports multiple languages and display themes. You can customize both to match your preferences from two convenient locations.

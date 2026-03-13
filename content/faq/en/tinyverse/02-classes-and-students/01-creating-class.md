@@ -1,3 +1,10 @@
+---
+title: "Creating a Class"
+category: "tinyverse"
+section: "Classes and Students"
+order: 1
+---
+
 # Creating a Class
 
 Classes help you organize your students and assign them experiments to work on. Each class gets a unique code (Class ID) that students use to join.

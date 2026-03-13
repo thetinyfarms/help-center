@@ -1,3 +1,10 @@
+---
+title: "Managing Class Devices"
+category: "tinyverse"
+section: "Classes and Students"
+order: 5
+---
+
 # Managing Class Devices
 
 You can add devices to your class for organizational purposes. This helps you keep track of which devices are associated with each class.

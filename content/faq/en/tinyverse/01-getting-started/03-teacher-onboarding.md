@@ -1,3 +1,10 @@
+---
+title: "Teacher Onboarding"
+category: "tinyverse"
+section: "Getting Started"
+order: 3
+---
+
 # Teacher Onboarding
 
 After creating your account and verifying your email, you'll go through a quick two-step onboarding process to set up your tinyverse experience. This helps personalize the platform for your location and language preferences.

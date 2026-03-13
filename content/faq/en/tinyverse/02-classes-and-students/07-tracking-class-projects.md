@@ -1,3 +1,10 @@
+---
+title: "Tracking Class Projects"
+category: "tinyverse"
+section: "Classes and Students"
+order: 7
+---
+
 # Tracking Class Projects
 
 After creating a class project, you can see which students have created experiments based on your template and view their work.

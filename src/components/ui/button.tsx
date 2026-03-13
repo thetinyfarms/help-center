@@ -30,12 +30,12 @@ const buttonVariants = cva(
         link:
           "!p-0 !gap-1 !h-auto !min-h-0 [&_>_svg]:!size-3 !rounded-none text-secondary-foreground underline underline-offset-2 hover:opacity-70",
         outline:
-          "rounded-sm border-md !border-input hover:bg-secondary/80"
+          "rounded-sm border-md !border-input text-secondary-foreground hover:bg-secondary/80 backdrop-blur-md"
       },
       size: {
-        default: "h-10 min-h-10 px-3 rounded-sm text-base [&_>_svg]:!size-5",
-        sm: "h-8 min-h-8 px-2 rounded-xs gap-1 text-sm [&_>_svg]:!size-4",
-        xs: "h-6 min-h-6 px-1.5 rounded-2xs gap-1 text-sm [&_>_svg]:!size-3.5",
+        default: "min-h-10 px-3 rounded-sm text-base [&_>_svg]:!size-5",
+        sm: "min-h-8 px-2 rounded-xs gap-1 text-sm [&_>_svg]:!size-4",
+        xs: "min-h-6 px-1.5 rounded-2xs gap-1 text-sm [&_>_svg]:!size-3.5",
         icon: "size-10 min-h-10 shrink-0 rounded-sm [&_>_svg]:!size-5",
         "icon-sm": "size-8 min-h-8 shrink-0 rounded-xs [&_>_svg]:!size-4",
         "icon-xs": "size-6 min-h-6 shrink-0 rounded-2xs [&_>_svg]:!size-3.5",

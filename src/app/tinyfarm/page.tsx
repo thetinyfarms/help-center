@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useLanguage } from "@/app/context/LanguageContext";
 import { fetchFaqArticles, type FaqArticle } from "@/lib/faq";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -60,9 +61,9 @@ export default function TinyfarmPage() {
         </div>
       </header>
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 gap-6 p-6 sm:p-8 lg:p-12">
         {/* Sidebar — desktop */}
-        <aside className="hidden w-72 shrink-0 overflow-y-auto border-r border-md bg-card/50 backdrop-blur lg:block">
+        <aside className="hidden w-80 shrink-0 overflow-y-auto rounded-xl border border-md bg-card shadow-md lg:block">
           <SidebarContent
             articles={articles}
             activeSlug={activeSlug}
@@ -78,7 +79,7 @@ export default function TinyfarmPage() {
               className="fixed inset-0 z-40 bg-black/30 lg:hidden"
               onClick={() => setSidebarOpen(false)}
             />
-            <aside className="fixed inset-y-0 left-0 z-50 w-72 overflow-y-auto bg-card backdrop-blur shadow-xl lg:hidden">
+            <aside className="fixed inset-y-0 left-0 z-50 w-80 overflow-y-auto bg-card backdrop-blur shadow-xl lg:hidden">
               <div className="pt-16">
                 <SidebarContent
                   articles={articles}
@@ -95,7 +96,7 @@ export default function TinyfarmPage() {
         )}
 
         {/* Content area */}
-        <main className="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-12">
+        <main className="flex-1 overflow-y-auto rounded-xl border border-md bg-card shadow-md p-8 sm:p-10 lg:p-12">
           <div className="mx-auto max-w-3xl space-y-10">
             {/* Device cards */}
             <section>
@@ -142,7 +143,7 @@ export default function TinyfarmPage() {
             {/* Article content */}
             {activeArticle ? (
               <article className="article-content">
-                <ReactMarkdown>{activeArticle.content}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{activeArticle.content}</ReactMarkdown>
               </article>
             ) : (
               <div className="py-12 text-center text-muted-foreground">

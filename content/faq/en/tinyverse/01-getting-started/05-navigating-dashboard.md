@@ -1,3 +1,10 @@
+---
+title: "Navigating the Dashboard"
+category: "tinyverse"
+section: "Getting Started"
+order: 5
+---
+
 # Navigating the Dashboard
 
 The tinyverse dashboard is designed to be intuitive and easy to navigate. The layout differs between teacher and student views, with each tailored to your specific needs.

@@ -1,66 +1,242 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, memo, useMemo, useCallback, startTransition } from "react";
 import Link from "next/link";
+import { useSearchParams, usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useLanguage } from "@/app/context/LanguageContext";
 import { fetchFaqArticles, type FaqArticle } from "@/lib/faq";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/lang/LanguageSelector";
-import { Menu, X } from "lucide-react";
+import { ArrowLeft, ChevronDown, Home, Menu, Search, X } from "lucide-react";
+import { Orbie } from "@/components/ui/orbie";
+
+interface Heading {
+  id: string;
+  text: string;
+  level: number;
+}
 
 export default function TinyversePage() {
   const t = useTranslations();
   const { locale } = useLanguage();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [articles, setArticles] = useState<FaqArticle[]>([]);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [headings, setHeadings] = useState<Heading[]>([]);
+  const [activeHeadingId, setActiveHeadingId] = useState<string | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     fetchFaqArticles(locale, "tinyverse").then((data) => {
       setArticles(data);
-      if (data.length > 0 && !activeSlug) {
+
+      // Check if there's an article in the URL path (e.g., /tinyverse/section/article)
+      const pathParts = pathname.split('/').filter(Boolean);
+      if (pathParts.length >= 3 && pathParts[0] === 'tinyverse') {
+        const sectionPath = pathParts[1];
+        const articlePath = pathParts[2];
+
+        // Find article by matching section and article slugs (without number prefixes)
+        const article = data.find(a => {
+          const articleSlugWithoutNumber = a.slug.replace(/^\d+-/, '');
+          const sectionSlugWithoutNumber = a.sectionSlug.replace(/^\d+-/, '');
+          return sectionSlugWithoutNumber === sectionPath && articleSlugWithoutNumber === articlePath;
+        });
+
+        if (article) {
+          setActiveSlug(article.slug);
+          return;
+        }
+      }
+
+      // Fallback: Check if there's an article in the URL query params (old format)
+      const articleParam = searchParams.get('article');
+      if (articleParam && data.find(a => a.slug === articleParam)) {
+        setActiveSlug(articleParam);
+      } else if (data.length > 0 && !activeSlug) {
         setActiveSlug(data[0].slug);
       }
     });
-  }, [locale]);
+  }, [locale, pathname, searchParams, activeSlug]);
 
   const activeArticle = articles.find((a) => a.slug === activeSlug) || null;
 
-  return (
-    <div className="flex min-h-screen flex-col bg-background bg-dotted">
-      {/* Top bar */}
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-md bg-background/95 backdrop-blur px-4 py-3 sm:px-6">
+  // Update URL when active article changes
+  const handleArticleSelect = useCallback((slug: string) => {
+    const article = articles.find(a => a.slug === slug);
+    if (!article) return;
+
+    // Use startTransition to make the state update non-blocking
+    startTransition(() => {
+      setActiveSlug(slug);
+    });
+
+    // Use the section slug (without numbers) and article slug for clean URLs
+    const sectionPath = article.sectionSlug.replace(/^\d+-/, ''); // Remove leading numbers
+    const articlePath = slug.replace(/^\d+-/, ''); // Remove leading numbers
+
+    // Use window.history.pushState to update URL without triggering navigation
+    window.history.pushState(null, '', `/tinyverse/${sectionPath}/${articlePath}`);
+  }, [articles]);
+
+  useEffect(() => {
+    // Scroll to top when active article changes
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [activeSlug]);
+
+  // Extract headings from markdown content
+  useEffect(() => {
+    if (!activeArticle?.content) {
+      setHeadings([]);
+      return;
+    }
+
+    const extractedHeadings: Heading[] = [];
+    const lines = activeArticle.content.split('\n');
+
+    lines.forEach((line) => {
+      const match = line.match(/^(#{2,6})\s+(.+)$/);
+      if (match) {
+        const level = match[1].length;
+        const text = match[2].trim();
+        const id = text
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-');
+
+        extractedHeadings.push({ id, text, level });
+      }
+    });
+
+    setHeadings(extractedHeadings);
+  }, [activeArticle]);
+
+  // Track active heading on scroll
+  useEffect(() => {
+    if (!scrollContainerRef.current || !contentRef.current || headings.length === 0) return;
+
+    const updateActiveHeading = () => {
+      if (!contentRef.current) return;
+
+      const headingElements = contentRef.current.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]');
+      if (!headingElements || headingElements.length === 0) return;
+
+      const viewportHeight = window.innerHeight;
+      const targetPosition = viewportHeight * 0.5; // 30% from top
+
+      // Find all headings that are currently visible
+      const visible: { element: Element; top: number; distance: number }[] = [];
+
+      headingElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const distanceFromTarget = Math.abs(rect.top - targetPosition);
+
+        // Include headings that are in viewport or just above
+        if (rect.top < viewportHeight && rect.bottom > 0) {
+          visible.push({ element: el, top: rect.top, distance: distanceFromTarget });
+        }
+      });
+
+      if (visible.length > 0) {
+        // Find heading closest to target position, preferring those above it
+        const aboveTarget = visible.filter(h => h.top <= targetPosition);
+        const target = aboveTarget.length > 0
+          ? aboveTarget.sort((a, b) => b.top - a.top)[0] // Get closest to target from above
+          : visible.sort((a, b) => a.distance - b.distance)[0]; // Or closest overall
+
+        const id = target.element.id;
+        if (id && id !== activeHeadingId) {
+          setActiveHeadingId(id);
+        }
+      }
+    };
+
+    // Small delay to ensure ReactMarkdown has rendered
+    const timeoutId = setTimeout(() => {
+      updateActiveHeading();
+
+      const scrollContainer = scrollContainerRef.current;
+      if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', updateActiveHeading);
+        window.addEventListener('resize', updateActiveHeading);
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      const scrollContainer = scrollContainerRef.current;
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', updateActiveHeading);
+      }
+      window.removeEventListener('resize', updateActiveHeading);
+    };
+  }, [activeArticle, headings, activeHeadingId]);
+
+  const navbar = useMemo(() => (
+    <header className="sticky z-50 top-0 flex items-center justify-center mx-auto w-full py-3 md:py-5 px-5 lg:px-8">
+      <div className="flex items-center justify-between mx-auto w-full">
+        <div className="flex items-center gap-3">
+          <Link href="/">
+            <img src="/assets/logos/logo-tiny.svg" alt="tiny logo" className="size-10 md:size-12" />
+          </Link>
+          <div className="flex items-center gap-1">
+            <Link href="/" className="text-lg font-heading text-heading font-medium tracking-tight">
+              Help Center
+            </Link>
+          </div>
+        </div>
         <div className="flex items-center gap-2">
           <Button
-            variant="ghost"
+            variant="outline"
+            size="sm"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <Search /> <span className="opacity-secondary font-normal">Search...</span>
+          </Button>
+          <LanguageSelector variant="secondary" size="sm" dropdownAlign="end" />
+          <Button
+            variant="secondary"
             size="icon-sm"
-            className="lg:hidden"
+            className="md:hidden"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             {sidebarOpen ? <X /> : <Menu />}
           </Button>
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="gap-1">
-              &larr; {t("nav.backToHome")}
-            </Button>
-          </Link>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="hidden text-sm font-semibold sm:block">Tinyverse</span>
-          <LanguageSelector variant="ghost" size="sm" subtle dropdownAlign="end" />
-        </div>
-      </header>
+      </div>
+    </header>
+  ), [sidebarOpen]);
 
-      <div className="flex flex-1">
+  return (
+    <div className="flex h-[100dvh] flex-col">
+      {/* Top bar */}
+      {navbar}
+
+      <div ref={scrollContainerRef} className="absolute top-0 left-0 flex mx-auto w-[100dvw] h-[100dvh] flex-1 gap-4 !pt-18 md:p-5 md:!pt-22 lg:p-8 overflow-y-auto">
         {/* Sidebar — desktop */}
-        <aside className="hidden w-72 shrink-0 overflow-y-auto border-r border-md bg-card/50 backdrop-blur lg:block">
+        <aside className="sticky top-0 hidden w-68 h-full shrink-0 rounded-md bg-card-fill border-md border-muted/40 md:block flex flex-col overflow-y-auto">
+          <div className="sticky top-0 z-10 flex items-center justify-between w-full gap-1 px-4 py-4 bg-muted/46 backdrop-blur-md border-b border-muted">
+            <Button variant="ghost" size="sm">
+              <img src="/assets/logos/logo-tinyverse-wordmark.svg" alt="tinyverse" className="h-4.5 mt-0.5" />
+              <ChevronDown className="opacity-secondary" />
+            </Button>
+            <Button variant="secondary" size="sm" className="font-semibold">
+              v1.5
+              <ChevronDown className="opacity-secondary" />
+            </Button>
+          </div>
           <SidebarContent
             articles={articles}
             activeSlug={activeSlug}
-            onSelect={setActiveSlug}
-            t={t}
+            onSelect={handleArticleSelect}
           />
         </aside>
 
@@ -68,86 +244,191 @@ export default function TinyversePage() {
         {sidebarOpen && (
           <>
             <div
-              className="fixed inset-0 z-40 bg-black/30 lg:hidden"
+              className="fixed inset-0 z-40 lg:hidden"
               onClick={() => setSidebarOpen(false)}
             />
-            <aside className="fixed inset-y-0 left-0 z-50 w-72 overflow-y-auto bg-card backdrop-blur shadow-xl lg:hidden">
-              <div className="pt-16">
-                <SidebarContent
-                  articles={articles}
-                  activeSlug={activeSlug}
-                  onSelect={(slug) => {
-                    setActiveSlug(slug);
-                    setSidebarOpen(false);
-                  }}
-                  t={t}
-                />
-              </div>
+            <aside className="fixed inset-y-0 right-0 z-50 h-full w-fit max-w-full p-4 pt-6 overflow-y-auto rounded-l-md bg-secondary/40 backdrop-blur-lg lg:hidden">
+              <SidebarContent
+                articles={articles}
+                activeSlug={activeSlug}
+                onSelect={(slug) => {
+                  handleArticleSelect(slug);
+                  setSidebarOpen(false);
+                }}
+              />
             </aside>
           </>
         )}
 
         {/* Content area */}
-        <main className="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-12">
-          <div className="mx-auto max-w-3xl space-y-10">
-            {/* Header */}
-            <section>
-              <h1 className="mb-2 text-2xl font-bold">{t("tinyverse.title")}</h1>
-              <p className="text-muted-foreground">{t("tinyverse.subtitle")}</p>
-            </section>
-
-            {/* Divider */}
-            <hr className="border-t border-md" />
-
-            {/* Article content */}
-            {activeArticle ? (
-              <article className="article-content">
-                <ReactMarkdown>{activeArticle.content}</ReactMarkdown>
-              </article>
-            ) : (
-              <div className="py-12 text-center text-muted-foreground">
-                {articles.length === 0 ? "Loading..." : t("help.notFound")}
-              </div>
-            )}
-          </div>
+        <main ref={contentRef} className="flex-1 flex gap-4 h-fit min-h-full">
+          {/* Article content */}
+          {activeArticle ? (
+            <article className="article-content max-w-4xl px-6 md:px-6">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h2: ({ children }) => {
+                    const text = String(children);
+                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    return <h2 id={id}>{children}</h2>;
+                  },
+                  h3: ({ children }) => {
+                    const text = String(children);
+                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    return <h3 id={id}>{children}</h3>;
+                  }
+                }}
+              >
+                {activeArticle.content}
+              </ReactMarkdown>
+            </article>
+          ) : (
+            <div className="size-full flex items-center justify-center py-12 text-center text-muted-foreground">
+              <p>{articles.length === 0 ? "Loading..." : t("help.notFound")}</p>
+            </div>
+          )}
         </main>
+
+        {/* Sidebar - On this page */}
+        <aside className="sticky top-0 hidden w-68 pt-4 shrink-0 lg:block">
+          <TableOfContents headings={headings} activeHeadingId={activeHeadingId} />
+        </aside>
+
       </div>
     </div>
   );
 }
 
-function SidebarContent({
+const SidebarContent = memo(function SidebarContent({
   articles,
   activeSlug,
   onSelect,
-  t,
 }: {
   articles: FaqArticle[];
   activeSlug: string | null;
   onSelect: (slug: string) => void;
-  t: ReturnType<typeof useTranslations>;
 }) {
+  // Group articles by section
+  const sections = articles.reduce((acc, article) => {
+    const sectionKey = article.sectionSlug || article.section;
+    if (!acc[sectionKey]) {
+      acc[sectionKey] = {
+        name: article.section,
+        order: article.sectionOrder,
+        articles: [],
+      };
+    }
+    acc[sectionKey].articles.push(article);
+    return acc;
+  }, {} as Record<string, { name: string; order: number; articles: FaqArticle[] }>);
+
+  // Sort sections by order
+  const sortedSections = Object.entries(sections).sort(
+    ([, a], [, b]) => a.order - b.order
+  );
+
   return (
-    <nav className="flex flex-col gap-1 p-4">
-      <h2 className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        {t("help.articles")}
+    <nav className="flex flex-col gap-8 p-4 pt-7">
+      {sortedSections.map(([sectionKey, section]) => (
+        <div key={sectionKey} className="flex flex-col items-start">
+          <h2 className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            {section.name}
+          </h2>
+          <div className="flex flex-col items-start gap-1 border-l-2 border-secondary ml-2">
+            {section.articles.map((article) => {
+              const isActive = article.slug === activeSlug;
+              return (
+                <Button
+                  key={article.slug}
+                  variant={isActive ? "secondary" : "ghost"}
+                  size="sm"
+                  onClick={() => onSelect(article.slug)}
+                  className={`justify-start text-sm font-medium -ml-0.5 px-3 py-1 rounded-l-none border-l-2 text-left whitespace-normal max-w-full
+                    ${
+                    isActive
+                      ? "text-secondary-foreground font-semibold border-primary"
+                      : "text-foreground/60 hover:text-secondary-foreground hover:border-primary/30 hover:bg-secondary/15"
+                  }
+                  `}
+                >
+                  {article.title}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </nav>
+  );
+});
+
+function TableOfContents({
+  headings,
+  activeHeadingId,
+}: {
+  headings: Heading[];
+  activeHeadingId: string | null;
+}) {
+
+  const handleClick = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    // Find the scroll container (the parent div with overflow-y-auto)
+    const scrollContainer = element.closest('.overflow-y-auto') as HTMLElement;
+    if (!scrollContainer) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    // Calculate the offset (navbar height)
+    const headerHeight = 88; // Adjust this to match your navbar height
+    const elementRect = element.getBoundingClientRect();
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const relativeTop = elementRect.top - containerRect.top;
+    const targetScrollTop = scrollContainer.scrollTop + relativeTop - headerHeight;
+
+    scrollContainer.scrollTo({
+      top: targetScrollTop,
+      behavior: 'smooth'
+    });
+  };
+
+  return (
+    <nav className="flex flex-col gap-2">
+      <h2 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        On this page
       </h2>
-      {articles.map((article) => {
-        const isActive = article.slug === activeSlug;
-        return (
-          <button
-            key={article.slug}
-            onClick={() => onSelect(article.slug)}
-            className={`cursor-pointer rounded-sm px-3 py-2 text-left text-sm font-medium transition-colors ${
-              isActive
-                ? "bg-secondary text-secondary-foreground"
-                : "text-foreground/70 hover:bg-secondary/60"
-            }`}
-          >
-            {article.title}
-          </button>
-        );
-      })}
+      {headings.length > 0 && (
+        <div className="flex flex-col items-start gap-1 border-l-2 border-secondary ml-2">
+          {headings.map((heading) => {
+            const isActive = heading.id === activeHeadingId;
+            // Calculate indentation based on heading level (h2 = 0, h3 = 1, etc.)
+            const indentLevel = heading.level - 2;
+            const paddingLeft = `${0.75 + indentLevel * 0.75}rem`; // 0.75rem base + 0.75rem per level
+
+            return (
+              <Button
+                key={heading.id}
+                variant="ghost"
+                size="sm"
+                onClick={() => handleClick(heading.id)}
+                className={`justify-start text-sm font-medium -ml-0.5 px-3 rounded-l-none border-l-2 !bg-transparent !backdrop-blur-none text-left whitespace-normal max-w-full
+                  ${
+                  isActive
+                    ? "text-secondary-foreground font-semibold border-primary"
+                    : "text-foreground/60 hover:text-secondary-foreground hover:border-primary/30"
+                }
+                `}
+                style={{ paddingLeft }}
+              >
+                {heading.text}
+              </Button>
+            );
+          })}
+        </div>
+      )}
     </nav>
   );
 }

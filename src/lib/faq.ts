@@ -2,6 +2,9 @@ export interface FaqArticle {
   slug: string;
   title: string;
   category: string;
+  section: string;
+  sectionSlug: string;
+  sectionOrder: number;
   order: number;
   content: string;
 }

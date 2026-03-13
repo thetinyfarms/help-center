@@ -15,12 +15,12 @@ const schibstedGrotesk = Schibsted_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: "Tinyfarm Help Center",
-    template: "%s | Tinyfarm Help Center",
+    default: "tiny - Help Center",
+    template: "%s | tiny - Help Center",
   },
   description: "Guides, firmware updates, and support for your Tinyfarm device",
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.svg",
   },
 };
 
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${spaceGrotesk.variable} ${schibstedGrotesk.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${schibstedGrotesk.variable} antialiased bg-background bg-dotted`}
       >
         <LanguageProvider>{children}</LanguageProvider>
       </body>

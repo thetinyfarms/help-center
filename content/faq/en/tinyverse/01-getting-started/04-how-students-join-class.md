@@ -1,3 +1,10 @@
+---
+title: "How Students Join a Class"
+category: "tinyverse"
+section: "Getting Started"
+order: 4
+---
+
 # How Students Join a Class
 
 You don't need an email address or traditional account to use the tinyverse. Join using a Class ID (from your teacher), a username, and a simple 4-digit PIN — making it easy to get started.

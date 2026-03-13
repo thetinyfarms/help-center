@@ -1,3 +1,10 @@
+---
+title: "Adding Students Manually"
+category: "tinyverse"
+section: "Classes and Students"
+order: 3
+---
+
 # Adding Students Manually
 
 You can pre-create student accounts for your class instead of having students join themselves. This is useful when you want to control student credentials or set up accounts in advance.

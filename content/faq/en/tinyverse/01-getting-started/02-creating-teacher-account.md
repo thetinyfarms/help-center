@@ -1,3 +1,10 @@
+---
+title: "Creating a Teacher Account"
+category: "tinyverse"
+section: "Getting Started"
+order: 2
+---
+
 # Creating a Teacher Account
 
 Getting started with the tinyverse takes just a minute. You can create a teacher account using your email address or sign in instantly with your Google or Microsoft account.

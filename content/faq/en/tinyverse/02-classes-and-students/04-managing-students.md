@@ -1,3 +1,10 @@
+---
+title: "Managing Students"
+category: "tinyverse"
+section: "Classes and Students"
+order: 4
+---
+
 # Managing Students
 
 Once students join your class, you can view and manage them from your class page. This includes viewing their login credentials, resetting PINs, and removing students when needed.
