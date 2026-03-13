@@ -9,7 +9,7 @@ order: 4
 
 You don't need an email address or traditional account to use the tinyverse. Join using a Class ID (from your teacher), a username, and a simple 4-digit PIN — making it easy to get started.
 
-### How to join
+## How to join
 
 1. Go to the [join page](https://universe.tiny.science/student/join)
 2. Enter the **Class ID** your teacher shared with you (6 characters)

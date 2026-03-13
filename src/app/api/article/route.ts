@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import fs from "fs";
 import path from "path";
 
-interface FaqArticle {
+interface Article {
   slug: string;
   title: string;
   category: string;
@@ -50,7 +50,7 @@ function parseSectionFromFolder(folderName: string): { order: number; slug: stri
   };
 }
 
-function loadArticlesFromDir(dir: string, category: string, folderName: string): FaqArticle[] {
+function loadArticlesFromDir(dir: string, category: string, folderName: string): Article[] {
   if (!fs.existsSync(dir)) return [];
 
   const sectionInfo = parseSectionFromFolder(folderName);
@@ -85,7 +85,7 @@ function loadArticlesFromDir(dir: string, category: string, folderName: string):
 export async function GET(request: NextRequest) {
   const locale = request.nextUrl.searchParams.get("locale") || "en";
   const categoryFilter = request.nextUrl.searchParams.get("category") || null;
-  const contentRoot = path.join(process.cwd(), "content", "faq");
+  const contentRoot = path.join(process.cwd(), "content", "articles");
 
   const localeDir = path.join(contentRoot, locale);
   const fallbackDir = path.join(contentRoot, "en");
@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
         fs.statSync(path.join(baseDir, f)).isDirectory()
       );
 
-  let articles: FaqArticle[] = [];
+  let articles: Article[] = [];
   for (const cat of categories) {
     const catDir = path.join(baseDir, cat);
 

@@ -9,9 +9,9 @@ order: 5
 
 The tinyverse dashboard is designed to be intuitive and easy to navigate. The layout differs between teacher and student views, with each tailored to your specific needs.
 
-### Teacher dashboard
+## Sidebar navigation
 
-**Sidebar navigation:**
+### Teacher
 - **Community:** Discover and duplicate public experiments shared by other teachers
 - **My experiments:** Your personal experiment library
 - **Classes:** View all your classes with a **+** button to create new ones. Each class appears as a clickable link below
@@ -19,9 +19,8 @@ The tinyverse dashboard is designed to be intuitive and easy to navigate. The la
 
 📷 *Screenshot: Teacher sidebar showing navigation menu, classes list, and profile button*
 
-### Student dashboard
+### Student
 
-**Sidebar navigation:**
 - **Class info:** Shows your teacher's name, school, and a dropdown with your class code and copy button
 - **Main navigation*** Class projects:** View class projects assigned by your teacher
 - **My experiments:** Your personal experiment library
@@ -29,7 +28,7 @@ The tinyverse dashboard is designed to be intuitive and easy to navigate. The la
 
 📷 *Screenshot: Student sidebar showing class info, navigation menu, profile button, and notification bell*
 
-### Bottom-right corner (both teacher and student)
+## Bottom-right corner
 
 You'll always find quick-access buttons for:
 - **Language selector:** Switch your interface language

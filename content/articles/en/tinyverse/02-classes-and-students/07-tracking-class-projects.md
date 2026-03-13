@@ -9,7 +9,7 @@ order: 7
 
 After creating a class project, you can see which students have created experiments based on your template and view their work.
 
-### Viewing student experiments
+## Viewing student experiments
 
 On your class page, the Class Projects section shows all your assigned projects. Each project displays the number of student experiments created from it.
 
@@ -23,7 +23,7 @@ Click on any class project to see:
 
 📷 *Screenshot: Project detail view showing grid of student experiments*
 
-### Opening student experiments
+## Opening student experiments
 
 From the project detail view, click "Open" on any student experiment to view it. You can see all their pages, modules, and data, but you cannot edit their work.
 

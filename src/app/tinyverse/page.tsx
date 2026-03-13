@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useLanguage } from "@/app/context/LanguageContext";
-import { fetchFaqArticles, type FaqArticle } from "@/lib/faq";
+import { fetchArticles, type Article } from "@/lib/article";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/lang/LanguageSelector";
 import { ArrowLeft, ChevronDown, Home, Menu, Search, X } from "lucide-react";
@@ -24,7 +24,7 @@ export default function TinyversePage() {
   const { locale } = useLanguage();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [articles, setArticles] = useState<FaqArticle[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [headings, setHeadings] = useState<Heading[]>([]);
@@ -33,7 +33,7 @@ export default function TinyversePage() {
   const contentRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    fetchFaqArticles(locale, "tinyverse").then((data) => {
+    fetchArticles(locale, "tinyverse").then((data) => {
       setArticles(data);
 
       // Check if there's an article in the URL path (e.g., /tinyverse/section/article)
@@ -305,7 +305,7 @@ const SidebarContent = memo(function SidebarContent({
   activeSlug,
   onSelect,
 }: {
-  articles: FaqArticle[];
+  articles: Article[];
   activeSlug: string | null;
   onSelect: (slug: string) => void;
 }) {
@@ -321,7 +321,7 @@ const SidebarContent = memo(function SidebarContent({
     }
     acc[sectionKey].articles.push(article);
     return acc;
-  }, {} as Record<string, { name: string; order: number; articles: FaqArticle[] }>);
+  }, {} as Record<string, { name: string; order: number; articles: Article[] }>);
 
   // Sort sections by order
   const sortedSections = Object.entries(sections).sort(
@@ -329,7 +329,7 @@ const SidebarContent = memo(function SidebarContent({
   );
 
   return (
-    <nav className="flex flex-col gap-8 p-4 pt-7">
+    <nav className="flex flex-col gap-8 px-4 py-7">
       {sortedSections.map(([sectionKey, section]) => (
         <div key={sectionKey} className="flex flex-col items-start">
           <h2 className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">

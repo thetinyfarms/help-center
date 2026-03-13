@@ -9,7 +9,7 @@ order: 5
 
 You can add devices to your class for organizational purposes. This helps you keep track of which devices are associated with each class.
 
-### Adding devices to a class
+## Adding devices to a class
 
 1. Go to your class page
 2. In the Devices section, click the **Add** button
@@ -20,7 +20,7 @@ The device is linked to your class and appears in the class devices list with it
 
 📷 *Screenshot: Add device dialog showing list of available devices*
 
-### Managing class devices
+## Managing class devices
 
 In the Devices section, you can:
 - View all devices linked to your class with their online/offline status

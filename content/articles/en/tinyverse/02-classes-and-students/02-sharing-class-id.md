@@ -9,14 +9,14 @@ order: 2
 
 After creating a class, you'll need to share the Class ID with your students so they can join. The Class ID is a unique 6-character code displayed at the top of your class page.
 
-### How to share your Class ID
+## How to share your Class ID
 
-**Quick copy:**
+### Quick copy
 Click the **Copy** button next to your Class ID at the top of the class page. This copies the code to your clipboard so you can paste it anywhere (email, chat, document, etc.).
 
 📷 *Screenshot: Class page header showing Class ID with copy and share buttons*
 
-**Share dialog:**
+### Share dialog
 Click the **Share** button to open a dialog with multiple sharing options:
 - **QR code** that students can scan with their devices
 - **Website link** (universe.tiny.science/join) with a copy button

@@ -9,7 +9,7 @@ order: 1
 
 Classes help you organize your students and assign them experiments to work on. Each class gets a unique code (Class ID) that students use to join.
 
-### How to create a class
+## How to create a class
 
 1. Click the **+** button next to "Classes" in your sidebar
 2. Enter a name for your class (e.g., "Biology Period 3" or "Grade 8 Science")

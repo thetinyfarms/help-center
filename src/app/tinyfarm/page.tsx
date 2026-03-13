@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useLanguage } from "@/app/context/LanguageContext";
-import { fetchFaqArticles, type FaqArticle } from "@/lib/faq";
+import { fetchArticles, type Article } from "@/lib/article";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,12 +21,12 @@ const DEVICES = [
 export default function TinyfarmPage() {
   const t = useTranslations();
   const { locale } = useLanguage();
-  const [articles, setArticles] = useState<FaqArticle[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    fetchFaqArticles(locale, "tinyfarm").then((data) => {
+    fetchArticles(locale, "tinyfarm").then((data) => {
       setArticles(data);
       if (data.length > 0 && !activeSlug) {
         setActiveSlug(data[0].slug);

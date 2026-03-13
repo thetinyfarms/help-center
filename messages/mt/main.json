@@ -51,14 +51,14 @@
     }
   },
   "help": {
-    "title": "Għajnuna u FAQ",
+    "title": "Għajnuna u Artikli",
     "articles": "Artikli",
     "categories": {
       "tinyfarm": "Tinyfarm",
       "tinyverse": "Tinyverse"
     },
     "notFound": "Artiklu mhux misjub",
-    "viewAll": "Għajnuna u FAQ"
+    "viewAll": "Għajnuna u Artikli"
   },
   "common": {
     "original": "Oriġinali",

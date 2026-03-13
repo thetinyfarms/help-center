@@ -51,14 +51,14 @@
     }
   },
   "help": {
-    "title": "Hjælp & FAQ",
+    "title": "Hjælp & Artikler",
     "articles": "Artikler",
     "categories": {
       "tinyfarm": "Tinyfarm",
       "tinyverse": "Tinyverse"
     },
     "notFound": "Artikel ikke fundet",
-    "viewAll": "Hjælp & FAQ"
+    "viewAll": "Hjælp & Artikler"
   },
   "common": {
     "original": "Original",

@@ -9,7 +9,7 @@ order: 3
 
 After creating your account and verifying your email, you'll go through a quick two-step onboarding process to set up your tinyverse experience. This helps personalize the platform for your location and language preferences.
 
-### Step 1: Choose your language
+## Step 1: Choose your language
 
 1. Select your preferred interface language from the dropdown
 2. The interface will update immediately to show you the new language
@@ -19,7 +19,7 @@ Your language choice sets the default for your entire interface. You can [change
 
 📷 *Screenshot: Step 1 showing the language selection dropdown with available languages*
 
-### Step 2: Select your country and school
+## Step 2: Select your country and school
 
 1. **Choose your country** from the searchable list
 2. **Find or create your school:**

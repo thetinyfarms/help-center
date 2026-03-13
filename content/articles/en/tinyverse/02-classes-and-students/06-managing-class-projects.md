@@ -9,7 +9,7 @@ order: 6
 
 Turn any of your experiments into a project that your students can access and use as a template. Students can create their own experiments based on your project.
 
-### Adding a class project
+## Adding a class project
 
 1. Go to your class page
 2. In the Class Projects section, click "Add project"
@@ -28,7 +28,7 @@ The experiment is now available as a project for students in this class.
 > [!info]
 > The same experiment can be a class project in multiple classes. Each class will see it independently in their Class projects section.
 
-### Removing a class project
+## Removing a class project
 
 To remove a project from your class:
 

@@ -1,4 +1,4 @@
-export interface FaqArticle {
+export interface Article {
   slug: string;
   title: string;
   category: string;
@@ -9,13 +9,13 @@ export interface FaqArticle {
   content: string;
 }
 
-export async function fetchFaqArticles(
+export async function fetchArticles(
   locale: string,
   category?: string
-): Promise<FaqArticle[]> {
+): Promise<Article[]> {
   const params = new URLSearchParams({ locale });
   if (category) params.set("category", category);
-  const res = await fetch(`/api/faq?${params}`);
+  const res = await fetch(`/api/article?${params}`);
   if (!res.ok) return [];
   const data = await res.json();
   return data.articles;

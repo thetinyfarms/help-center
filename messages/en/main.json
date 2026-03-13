@@ -53,14 +53,14 @@
     }
   },
   "help": {
-    "title": "Help & FAQ",
+    "title": "Help & Articles",
     "articles": "Articles",
     "categories": {
       "tinyfarm": "tinyfarm",
       "tinyverse": "tinyverse"
     },
     "notFound": "Article not found",
-    "viewAll": "Help & FAQ"
+    "viewAll": "Help & Articles"
   },
   "common": {
     "original": "Original",

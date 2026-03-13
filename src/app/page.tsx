@@ -41,13 +41,11 @@ export default function Home() {
                   {t('tinyfarm.card.description')}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-0 -mt-2">
-                <Link href="/tinyfarm" className="no-underline self-start">
-                  <Button variant="link" size="sm" className="text-green-600 !no-underline group-hover:!underline pointer-events-none">
-                    {t('common.getHelp')}
-                    <ChevronRight className="opacity-secondary"/>
-                  </Button>
-                </Link>
+              <CardContent className="pt-0 -mt-2 items-start">
+                <Button variant="link" size="sm" className="text-green-600 !no-underline group-hover:!underline pointer-events-none">
+                  {t('common.getHelp')}
+                  <ChevronRight className="opacity-secondary"/>
+                </Button>
               </CardContent>
             </Card>
           </Link>
@@ -65,13 +63,11 @@ export default function Home() {
                   {t('tinyverse.card.description')}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-0 -mt-2">
-                <Link href="/tinyverse" className="no-underline self-start">
-                  <Button variant="link" size="sm" className="!no-underline group-hover:!underline pointer-events-none">
-                    {t('common.getHelp')}
-                    <ChevronRight className="opacity-secondary"/>
-                  </Button>
-                </Link>
+              <CardContent className="pt-0 -mt-2 items-start">
+                <Button variant="link" size="sm" className="!no-underline group-hover:!underline pointer-events-none">
+                  {t('common.getHelp')}
+                  <ChevronRight className="opacity-secondary"/>
+                </Button>
               </CardContent>
             </Card>
           </Link>

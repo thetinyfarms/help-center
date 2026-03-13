@@ -9,7 +9,7 @@ order: 3
 
 You can pre-create student accounts for your class instead of having students join themselves. This is useful when you want to control student credentials or set up accounts in advance.
 
-### How to add students manually
+## How to add students manually
 
 1. Go to your class page
 2. In the Students section, click the **Add** button

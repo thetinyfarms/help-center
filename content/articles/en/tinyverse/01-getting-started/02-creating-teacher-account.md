@@ -9,7 +9,7 @@ order: 2
 
 Getting started with the tinyverse takes just a minute. You can create a teacher account using your email address or sign in instantly with your Google or Microsoft account.
 
-### How to register
+## How to register
 
 1. Go to the [registration page](https://universe.tiny.science/teacher/register)
 2. Choose your sign-up method:
@@ -20,14 +20,14 @@ Getting started with the tinyverse takes just a minute. You can create a teacher
 
 📷 *Screenshot: The registration page showing email fields and Google/Microsoft sign-in buttons*
 
-### Sign-up options
+## Sign-up options
 
-**Email registration:**
+### Email registration
 - Requires a valid email address
 - Password must be at least 6 characters
 - You'll need to verify your email before accessing your account
 
-**Single sign-on (Google/Microsoft):**
+### Single sign-on (Google/Microsoft)
 - Faster sign-up with no password to remember
 - Uses your existing Google or Microsoft account
 - No email verification needed

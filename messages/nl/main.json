@@ -51,14 +51,14 @@
     }
   },
   "help": {
-    "title": "Hulp & FAQ",
+    "title": "Hulp & Artikelen",
     "articles": "Artikelen",
     "categories": {
       "tinyfarm": "Tinyfarm",
       "tinyverse": "Tinyverse"
     },
     "notFound": "Artikel niet gevonden",
-    "viewAll": "Hulp & FAQ"
+    "viewAll": "Hulp & Artikelen"
   },
   "common": {
     "original": "Origineel",

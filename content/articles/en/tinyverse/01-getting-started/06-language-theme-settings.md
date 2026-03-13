@@ -9,7 +9,7 @@ order: 6
 
 The tinyverse supports multiple languages and display themes. You can customize both to match your preferences from two convenient locations.
 
-### Changing your language
+## Changing your language
 
 1. Click the language selector in the bottom-right corner of any page, or
 2. Go to Account settings and find the "Platform" section
@@ -24,7 +24,7 @@ Your language preference is saved to your account and will apply across all your
 > [!info]
 > The tinyverse is available in 7 languages: English, Deutsch (German), Nederlands (Dutch), Lietuvių (Lithuanian), Dansk (Danish), Hrvatski (Croatian), and Malti (Maltese).
 
-### Changing your theme
+## Changing your theme
 
 1. Click the theme toggle (sun/moon icon) in the bottom-right corner of any page, or
 2. Go to Account settings and find the "Platform" section
