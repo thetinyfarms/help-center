@@ -97,26 +97,18 @@ export default function TinyversePage() {
   // Extract headings from markdown content
   useEffect(() => {
     if (!activeArticle?.content) {
-      console.log('[TOC] No active article content');
       setHeadings([]);
       return;
     }
 
-    console.log('[TOC] Extracting headings from article:', activeArticle.title);
-    console.log('[TOC] Content length:', activeArticle.content.length);
-
     const extractedHeadings: Heading[] = [];
     const lines = activeArticle.content.split('\n');
-    console.log('[TOC] Total lines:', lines.length);
-    console.log('[TOC] First 10 lines:', lines.slice(0, 10));
 
-    lines.forEach((line, index) => {
-      // Log lines that start with # to see the format
-      if (line.trim().startsWith('#')) {
-        console.log(`[TOC] Line ${index} starts with #:`, JSON.stringify(line));
-      }
+    lines.forEach((line) => {
+      // Strip carriage returns to handle Windows line endings
+      const cleanLine = line.replace(/\r/g, '');
 
-      const match = line.match(/^(#{2,3})\s+(.+)$/);
+      const match = cleanLine.match(/^(#{2,3})\s+(.+)$/);
       if (match) {
         const level = match[1].length;
         const text = match[2].trim();
@@ -125,12 +117,10 @@ export default function TinyversePage() {
           .replace(/[^\w\s-]/g, '')
           .replace(/\s+/g, '-');
 
-        console.log(`[TOC] Found heading at line ${index}: level=${level}, text="${text}", id="${id}"`);
         extractedHeadings.push({ id, text, level });
       }
     });
 
-    console.log('[TOC] Total headings extracted:', extractedHeadings.length, extractedHeadings);
     setHeadings(extractedHeadings);
   }, [activeArticle]);
 
@@ -435,8 +425,6 @@ function TableOfContents({
       behavior: 'smooth'
     });
   };
-
-  console.log('[TOC Component] Rendering with headings:', headings.length, headings);
 
   return (
     <nav className="flex flex-col gap-2">
