@@ -30,6 +30,8 @@ export default function TinyversePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeHeadingId, setActiveHeadingId] = useState<string | null>(null);
+  const [isManualClick, setIsManualClick] = useState(false);
+  const isProgrammaticScrollRef = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -129,6 +131,9 @@ export default function TinyversePage() {
     if (!scrollContainerRef.current || !contentRef.current || headings.length === 0) return;
 
     const updateActiveHeading = () => {
+      // Skip auto-update if user manually clicked a TOC item
+      if (isManualClick) return;
+
       if (!contentRef.current) return;
 
       const headingElements = contentRef.current.querySelectorAll('h2[id], h3[id]');
@@ -164,12 +169,35 @@ export default function TinyversePage() {
       }
     };
 
+    // Detect user scroll to re-enable auto-tracking
+    let isScrolling = false;
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleUserScroll = () => {
+      // Ignore programmatic scrolls (from TOC clicks)
+      if (isProgrammaticScrollRef.current) {
+        return;
+      }
+
+      if (isManualClick && !isScrolling) {
+        // User started scrolling - re-enable auto-tracking
+        setIsManualClick(false);
+      }
+
+      isScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 150);
+    };
+
     // Small delay to ensure ReactMarkdown has rendered
     const timeoutId = setTimeout(() => {
       updateActiveHeading();
 
       const scrollContainer = scrollContainerRef.current;
       if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', handleUserScroll);
         scrollContainer.addEventListener('scroll', updateActiveHeading);
         window.addEventListener('resize', updateActiveHeading);
       }
@@ -177,13 +205,15 @@ export default function TinyversePage() {
 
     return () => {
       clearTimeout(timeoutId);
+      clearTimeout(scrollTimeout);
       const scrollContainer = scrollContainerRef.current;
       if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleUserScroll);
         scrollContainer.removeEventListener('scroll', updateActiveHeading);
       }
       window.removeEventListener('resize', updateActiveHeading);
     };
-  }, [activeArticle, headings, activeHeadingId]);
+  }, [activeArticle, headings, activeHeadingId, isManualClick]);
 
   const navbar = useMemo(() => (
     <header ref={headerRef} className="sticky z-50 top-0 flex items-center justify-center mx-auto w-full py-3 md:py-6 px-5 lg:px-6">
@@ -302,7 +332,16 @@ export default function TinyversePage() {
 
           {/* Sidebar - TOC */}
           <aside className="sticky top-0 hidden w-[20%] pt-4 shrink-0 lg:block">
-            <TableOfContents headings={headings} activeHeadingId={activeHeadingId} headerRef={headerRef} />
+            <TableOfContents
+              headings={headings}
+              activeHeadingId={activeHeadingId}
+              headerRef={headerRef}
+              isProgrammaticScrollRef={isProgrammaticScrollRef}
+              onHeadingClick={(id: string) => {
+                setActiveHeadingId(id);
+                setIsManualClick(true);
+              }}
+            />
           </aside>
         
         {/* Sidebar — mobile overlay */}
@@ -396,13 +435,20 @@ function TableOfContents({
   headings,
   activeHeadingId,
   headerRef,
+  isProgrammaticScrollRef,
+  onHeadingClick,
 }: {
   headings: Heading[];
   activeHeadingId: string | null;
   headerRef: React.RefObject<HTMLElement | null>;
+  isProgrammaticScrollRef: React.RefObject<boolean>;
+  onHeadingClick: (id: string) => void;
 }) {
 
   const handleClick = (id: string) => {
+    // Set active heading immediately
+    onHeadingClick(id);
+
     const element = document.getElementById(id);
     if (!element) return;
 
@@ -412,6 +458,9 @@ function TableOfContents({
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
+
+    // Mark this as a programmatic scroll
+    isProgrammaticScrollRef.current = true;
 
     // Dynamically get the header height
     const headerHeight = headerRef.current?.offsetHeight || 112;
@@ -424,6 +473,11 @@ function TableOfContents({
       top: targetScrollTop,
       behavior: 'smooth'
     });
+
+    // Clear the programmatic scroll flag after animation completes
+    setTimeout(() => {
+      isProgrammaticScrollRef.current = false;
+    }, 1000); // Smooth scroll typically takes ~500-700ms, so 1s is safe
   };
 
   return (
