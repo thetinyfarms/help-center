@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/lang/LanguageSelector";
 import { ArrowLeft, ChevronDown, Home, Menu, Search, X } from "lucide-react";
 import { Orbie } from "@/components/ui/orbie";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 
 interface Heading {
   id: string;
@@ -31,6 +32,7 @@ export default function TinyversePage() {
   const [activeHeadingId, setActiveHeadingId] = useState<string | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     fetchArticles(locale, "tinyverse").then((data) => {
@@ -126,11 +128,11 @@ export default function TinyversePage() {
     const updateActiveHeading = () => {
       if (!contentRef.current) return;
 
-      const headingElements = contentRef.current.querySelectorAll('h2[id], h3[id], h4[id], h5[id], h6[id]');
+      const headingElements = contentRef.current.querySelectorAll('h2[id], h3[id]');
       if (!headingElements || headingElements.length === 0) return;
 
       const viewportHeight = window.innerHeight;
-      const targetPosition = viewportHeight * 0.5; // 30% from top
+      const targetPosition = viewportHeight * 0.5; // 50% from top
 
       // Find all headings that are currently visible
       const visible: { element: Element; top: number; distance: number }[] = [];
@@ -181,27 +183,52 @@ export default function TinyversePage() {
   }, [activeArticle, headings, activeHeadingId]);
 
   const navbar = useMemo(() => (
-    <header className="sticky z-50 top-0 flex items-center justify-center mx-auto w-full py-3 md:py-5 px-5 lg:px-8">
+    <header ref={headerRef} className="sticky z-50 top-0 flex items-center justify-center mx-auto w-full py-3 md:py-6 px-5 lg:px-6">
       <div className="flex items-center justify-between mx-auto w-full">
-        <div className="flex items-center gap-3">
-          <Link href="/">
-            <img src="/assets/logos/logo-tiny.svg" alt="tiny logo" className="size-10 md:size-12" />
+        <div className="flex w-fit items-center gap-3">
+          <Link href="/" className="size-10 md:size-16 shrink-0">
+            <img src="/assets/logos/logo-tiny.svg" alt="tiny logo" className="size-full" />
           </Link>
-          <div className="flex items-center gap-1">
-            <Link href="/" className="text-lg font-heading text-heading font-medium tracking-tight">
+          {/* <div className="flex items-center gap-1 shrink-0">
+            <Link href="/" className="text-lg font-heading text-heading font-medium tracking-tighter">
               Help Center
             </Link>
-          </div>
+          </div> */}
+          <Breadcrumb className="max-w-full p-1.5 !border-md border-muted bg-card/60 backdrop-blur-md rounded-sm transition-all duration-150">
+            <BreadcrumbList>
+              <BreadcrumbLink href="/" className="shrink-0">
+                <Button variant="ghost" size="xs" className="h-6 font-heading tracking-tighter font-medium text-lg">
+                  Help Center
+                </Button>
+              </BreadcrumbLink>
+              
+              <span className="disabled text-secondary-foreground">/</span>
+              
+              <BreadcrumbItem>
+                <img src="/assets/logos/logo-tinyverse-wordmark.svg" alt="tinyverse" className="h-[1rem] mt-0.5" />
+                <ChevronDown className="opacity-secondary" />
+              </BreadcrumbItem>
+
+              {/* <span className="text-lg disabled text-secondary-foreground">/</span>
+              
+              <BreadcrumbItem>
+                v1.5
+                <ChevronDown className="opacity-secondary" />
+              </BreadcrumbItem> */}
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            size="sm"
+            size="default"
             onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="pr-8"
           >
-            <Search /> <span className="opacity-secondary font-normal">Search...</span>
+            <Search />
+            <span className="opacity-secondary font-normal">Search...</span>
           </Button>
-          <LanguageSelector variant="secondary" size="sm" dropdownAlign="end" />
+          <LanguageSelector variant="secondary" size="default" dropdownAlign="end" />
           <Button
             variant="secondary"
             size="icon-sm"
@@ -216,30 +243,65 @@ export default function TinyversePage() {
   ), [sidebarOpen]);
 
   return (
-    <div className="flex h-[100dvh] flex-col">
+    <>
       {/* Top bar */}
       {navbar}
 
-      <div ref={scrollContainerRef} className="absolute top-0 left-0 flex mx-auto w-[100dvw] h-[100dvh] flex-1 gap-4 !pt-18 md:p-5 md:!pt-22 lg:p-8 overflow-y-auto">
-        {/* Sidebar — desktop */}
-        <aside className="sticky top-0 hidden w-68 h-full shrink-0 rounded-md bg-card-fill border-md border-muted/40 md:block flex flex-col overflow-y-auto">
-          <div className="sticky top-0 z-10 flex items-center justify-between w-full gap-1 px-4 py-4 bg-muted/46 backdrop-blur-md border-b border-muted">
-            <Button variant="ghost" size="sm">
-              <img src="/assets/logos/logo-tinyverse-wordmark.svg" alt="tinyverse" className="h-4.5 mt-0.5" />
-              <ChevronDown className="opacity-secondary" />
-            </Button>
-            <Button variant="secondary" size="sm" className="font-semibold">
-              v1.5
-              <ChevronDown className="opacity-secondary" />
-            </Button>
-          </div>
-          <SidebarContent
-            articles={articles}
-            activeSlug={activeSlug}
-            onSelect={handleArticleSelect}
-          />
-        </aside>
+      <div ref={scrollContainerRef} className="absolute top-0 left-0 w-[100dvw] h-[100dvh] flex gap-4 !pt-18 md:p-5 md:!pt-28 lg:p-6 overflow-y-auto">
+          {/* Sidebar — desktop */}
+          <aside className="sticky top-0 hidden w-[20%] min-w-64 h-full shrink-0 rounded-md bg-card-fill border-md border-muted/40 md:block flex flex-col overflow-y-auto">
+            {/* <div className="sticky top-0 z-10 flex items-center justify-between w-full gap-1 px-4 py-4 bg-muted/46 backdrop-blur-md border-b border-muted">
+              <Button variant="ghost" size="sm">
+                <img src="/assets/logos/logo-tinyverse-wordmark.svg" alt="tinyverse" className="h-4.5 mt-0.5" />
+                <ChevronDown className="opacity-secondary" />
+              </Button>
+              <Button variant="secondary" size="sm" className="font-semibold">
+                v1.5
+                <ChevronDown className="opacity-secondary" />
+              </Button>
+            </div> */}
+            <SidebarContent
+              articles={articles}
+              activeSlug={activeSlug}
+              onSelect={handleArticleSelect}
+            />
+          </aside>
 
+          {/* Content area */}
+          <main ref={contentRef} className="flex-1 flex gap-4 h-fit min-h-full">
+            {/* Article content */}
+            {activeArticle ? (
+              <article className="article-content px-6 md:px-6">
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h2: ({ children }) => {
+                      const text = String(children);
+                      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                      return <h2 id={id}>{children}</h2>;
+                    },
+                    h3: ({ children }) => {
+                      const text = String(children);
+                      const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                      return <h3 id={id}>{children}</h3>;
+                    }
+                  }}
+                >
+                  {activeArticle.content}
+                </ReactMarkdown>
+              </article>
+            ) : (
+              <div className="size-full flex items-center justify-center py-12 text-center text-muted-foreground">
+                <p>{articles.length === 0 ? "Loading..." : t("help.notFound")}</p>
+              </div>
+            )}
+          </main>
+
+          {/* Sidebar - TOC */}
+          <aside className="sticky top-0 hidden w-[20%] pt-4 shrink-0 lg:block">
+            <TableOfContents headings={headings} activeHeadingId={activeHeadingId} headerRef={headerRef} />
+          </aside>
+        
         {/* Sidebar — mobile overlay */}
         {sidebarOpen && (
           <>
@@ -259,44 +321,8 @@ export default function TinyversePage() {
             </aside>
           </>
         )}
-
-        {/* Content area */}
-        <main ref={contentRef} className="flex-1 flex gap-4 h-fit min-h-full">
-          {/* Article content */}
-          {activeArticle ? (
-            <article className="article-content max-w-4xl px-6 md:px-6">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  h2: ({ children }) => {
-                    const text = String(children);
-                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-                    return <h2 id={id}>{children}</h2>;
-                  },
-                  h3: ({ children }) => {
-                    const text = String(children);
-                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-                    return <h3 id={id}>{children}</h3>;
-                  }
-                }}
-              >
-                {activeArticle.content}
-              </ReactMarkdown>
-            </article>
-          ) : (
-            <div className="size-full flex items-center justify-center py-12 text-center text-muted-foreground">
-              <p>{articles.length === 0 ? "Loading..." : t("help.notFound")}</p>
-            </div>
-          )}
-        </main>
-
-        {/* Sidebar - On this page */}
-        <aside className="sticky top-0 hidden w-68 pt-4 shrink-0 lg:block">
-          <TableOfContents headings={headings} activeHeadingId={activeHeadingId} />
-        </aside>
-
       </div>
-    </div>
+    </>
   );
 }
 
@@ -331,7 +357,7 @@ const SidebarContent = memo(function SidebarContent({
   return (
     <nav className="flex flex-col gap-8 px-4 py-7">
       {sortedSections.map(([sectionKey, section]) => (
-        <div key={sectionKey} className="flex flex-col items-start">
+        <div key={sectionKey} className="flex flex-col items-stretch">
           <h2 className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             {section.name}
           </h2>
@@ -341,14 +367,14 @@ const SidebarContent = memo(function SidebarContent({
               return (
                 <Button
                   key={article.slug}
-                  variant={isActive ? "secondary" : "ghost"}
+                  variant="ghost"
                   size="sm"
                   onClick={() => onSelect(article.slug)}
-                  className={`justify-start text-sm font-medium -ml-0.5 px-3 py-1 rounded-l-none border-l-2 text-left whitespace-normal max-w-full
+                  className={`justify-start text-sm font-medium -ml-0.5 px-3 py-1 rounded-l-none border-l-2 !bg-transparent !backdrop-blur-none text-left whitespace-normal max-w-full
                     ${
                     isActive
                       ? "text-secondary-foreground font-semibold border-primary"
-                      : "text-foreground/60 hover:text-secondary-foreground hover:border-primary/30 hover:bg-secondary/15"
+                      : "text-foreground/60 hover:text-secondary-foreground hover:border-primary/30"
                   }
                   `}
                 >
@@ -366,9 +392,11 @@ const SidebarContent = memo(function SidebarContent({
 function TableOfContents({
   headings,
   activeHeadingId,
+  headerRef,
 }: {
   headings: Heading[];
   activeHeadingId: string | null;
+  headerRef: React.RefObject<HTMLElement | null>;
 }) {
 
   const handleClick = (id: string) => {
@@ -382,8 +410,8 @@ function TableOfContents({
       return;
     }
 
-    // Calculate the offset (navbar height)
-    const headerHeight = 88; // Adjust this to match your navbar height
+    // Dynamically get the header height
+    const headerHeight = headerRef.current?.offsetHeight || 112;
     const elementRect = element.getBoundingClientRect();
     const containerRect = scrollContainer.getBoundingClientRect();
     const relativeTop = elementRect.top - containerRect.top;
@@ -398,10 +426,10 @@ function TableOfContents({
   return (
     <nav className="flex flex-col gap-2">
       <h2 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        On this page
+        In this article
       </h2>
       {headings.length > 0 && (
-        <div className="flex flex-col items-start gap-1 border-l-2 border-secondary ml-2">
+        <div className="flex-1 flex flex-col items-start gap-1 border-l-2 border-secondary ml-2">
           {headings.map((heading) => {
             const isActive = heading.id === activeHeadingId;
             // Calculate indentation based on heading level (h2 = 0, h3 = 1, etc.)
@@ -414,7 +442,7 @@ function TableOfContents({
                 variant="ghost"
                 size="sm"
                 onClick={() => handleClick(heading.id)}
-                className={`justify-start text-sm font-medium -ml-0.5 px-3 rounded-l-none border-l-2 !bg-transparent !backdrop-blur-none text-left whitespace-normal max-w-full
+                className={`justify-start text-sm font-medium -ml-0.5 px-3 py-1 rounded-l-none border-l-2 !bg-transparent !backdrop-blur-none text-left whitespace-normal max-w-full
                   ${
                   isActive
                     ? "text-secondary-foreground font-semibold border-primary"

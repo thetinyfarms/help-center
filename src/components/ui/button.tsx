@@ -30,7 +30,7 @@ const buttonVariants = cva(
         link:
           "!p-0 !gap-1 !h-auto !min-h-0 [&_>_svg]:!size-3 !rounded-none text-secondary-foreground underline underline-offset-2 hover:opacity-70",
         outline:
-          "rounded-sm border-md !border-input text-secondary-foreground hover:bg-secondary/80 backdrop-blur-md"
+          "rounded-sm bg-card/60 border-md !border-muted text-secondary-foreground hover:!border-border hover:bg-secondary/20 backdrop-blur-md"
       },
       size: {
         default: "min-h-10 px-3 rounded-sm text-base [&_>_svg]:!size-5",

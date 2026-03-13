@@ -104,7 +104,7 @@ export default function TinyfarmPage() {
               <p className="mb-6 text-muted-foreground">{t("tinyfarm.subtitle")}</p>
               <div className="grid gap-4 sm:grid-cols-2">
                 {DEVICES.map((device) => (
-                  <Link key={device.id} href={`/flash/${device.id}`} className="no-underline">
+                  <Link key={device.id} href={`/update/${device.id}`} className="no-underline">
                     <Card
                       size="sm"
                       className="group cursor-pointer border-green-300 bg-green-50 shadow-green-200 transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md hover:shadow-green-300 dark:border-green-700 dark:bg-green-950 dark:shadow-green-800 dark:hover:shadow-green-700"

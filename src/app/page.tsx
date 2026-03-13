@@ -36,7 +36,7 @@ export default function Home() {
               className="group cursor-pointer bg-green-50 border-green-100 shadow-green-100 shadow-none transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-200 hover:border-green-200 dark:border-green-700 dark:bg-green-950 dark:shadow-green-800 dark:hover:shadow-green-700"
             >
               <CardHeader>
-                <img src="/assets/logos/logo-tinyfarm-color-light.svg" alt="tinyfarm logo" className="h-16 w-fit mb-3" />
+                <img src="/assets/logos/logo-tinyfarm.svg" alt="tinyfarm logo" className="h-16 w-fit mb-3" />
                 <CardDescription className="text-foreground">
                   {t('tinyfarm.card.description')}
                 </CardDescription>
